@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndiGo (6E) Details | Atlas Airline Status Dashboard</title>
+    <style>
+        :root {
+            --bg-primary: #f5f5f5;
+            --bg-white: #ffffff;
+            --border-color: #e8e8e8;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --text-muted: #8c8c8c;
+            --primary-color: #1890ff;
+            --success-color: #52c41a;
+            --warning-color: #faad14;
+            --error-color: #ff4d4f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .header {
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .logo { font-size: 16px; font-weight: 600; color: var(--primary-color); }
+        .nav-tabs { display: flex; gap: 4px; }
+        .nav-tab { padding: 12px 16px; color: var(--text-secondary); text-decoration: none; border-bottom: 2px solid transparent; }
+        .nav-tab:hover { color: var(--primary-color); }
+        .nav-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--text-muted); }
+        .main-content { padding: 24px; max-width: 1400px; margin: 0 auto; }
+        .breadcrumb { font-size: 13px; margin-bottom: 16px; }
+        .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--primary-color); }
+        .breadcrumb span { color: var(--text-muted); margin: 0 8px; }
+        .airline-header {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .airline-info { display: flex; align-items: center; gap: 16px; }
+        .airline-logo {
+            width: 48px; height: 48px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; color: var(--text-secondary);
+        }
+        .airline-name { font-size: 20px; font-weight: 500; }
+        .airline-actions { display: flex; gap: 12px; align-items: center; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 13px; }
+        .status-badge.online { background: #f6ffed; color: #52c41a; }
+        .action-btn {
+            padding: 6px 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-white);
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .action-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .action-btn.primary { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .action-btn.starred { color: var(--warning-color); border-color: var(--warning-color); }
+        .section {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+        .section-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title { font-size: 14px; font-weight: 500; }
+        .section-subtitle { font-size: 12px; color: var(--text-muted); margin-left: 8px; }
+        .section-body { padding: 16px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .time-selector { display: flex; gap: 4px; }
+        .time-btn {
+            padding: 4px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-white);
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .time-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .time-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .data-card { background: #fafafa; border-radius: 4px; padding: 16px; text-align: center; }
+        .data-card-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .data-card-value { font-size: 24px; font-weight: 500; }
+        .data-card-value.success { color: var(--success-color); }
+        .data-card-value.warning { color: var(--warning-color); }
+        .data-card-trend { font-size: 12px; margin-top: 4px; }
+        .trend-up { color: var(--success-color); }
+        .simple-table { width: 100%; border-collapse: collapse; }
+        .simple-table th, .simple-table td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 13px; }
+        .simple-table th { font-weight: 500; color: var(--text-muted); background: #fafafa; }
+        .simple-table th.sortable { cursor: pointer; }
+        .simple-table th.sortable:hover { color: var(--primary-color); }
+        .simple-table tr:hover td { background: #fafafa; }
+        .rate-value { font-weight: 500; }
+        .rate-value.success { color: var(--success-color); }
+        .rate-value.warning { color: var(--warning-color); }
+        .chart-placeholder {
+            height: 200px;
+            background: #fafafa;
+            border: 1px dashed var(--border-color);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); font-size: 13px;
+        }
+        .fault-record { padding: 12px; background: #fafafa; border-radius: 4px; margin-bottom: 8px; }
+        .fault-record:last-child { margin-bottom: 0; }
+        .fault-record-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .fault-record-title { font-size: 13px; font-weight: 500; }
+        .fault-record-time { font-size: 12px; color: var(--text-muted); }
+        .fault-record-reason { font-size: 13px; color: var(--text-secondary); }
+        .fault-record-duration { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .section-filter { display: flex; gap: 16px; margin-bottom: 16px; }
+        .filter-input { padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px; }
+        .filter-input:focus { border-color: var(--primary-color); outline: none; }
+        .pagination { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 16px; border-top: 1px solid var(--border-color); }
+        .pagination-info { font-size: 13px; color: var(--text-muted); }
+        .pagination-btns { display: flex; gap: 4px; }
+        .page-btn { padding: 4px 10px; border: 1px solid var(--border-color); background: var(--bg-white); border-radius: 4px; font-size: 13px; cursor: pointer; }
+        .page-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .page-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .availability-stat { display: flex; align-items: center; gap: 16px; padding: 12px; background: #fafafa; border-radius: 4px; }
+        .availability-value { font-size: 32px; font-weight: 500; color: var(--success-color); }
+        .availability-label { font-size: 13px; color: var(--text-muted); }
+        /* Tooltip styles */
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--border-color);
+            color: var(--text-muted);
+            font-size: 10px;
+            cursor: help;
+            position: relative;
+        }
+        .info-icon:hover { background: var(--primary-color); color: white; }
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.5;
+            width: 260px;
+            text-align: left;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 100;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0,0,0,0.85);
+        }
+        .info-icon:hover .tooltip { visibility: visible; opacity: 1; }
+        .tooltip-title { font-weight: 500; margin-bottom: 4px; color: #fff; }
+        .tooltip-refresh { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .th-label { display: flex; align-items: center; gap: 4px; }
+        .subsection-label { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .platform-data-grid { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 12px; margin-bottom: 16px; }
+        .platform-data-grid .data-card { padding: 12px; }
+        .platform-data-grid .data-card-value { font-size: 20px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">Atlas Airline Status</div>
+            <nav class="nav-tabs">
+                <a href="index-en.html" class="nav-tab">Overview</a>
+                <a href="airline-list-en.html" class="nav-tab">Airline List</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span>Last Updated: 2025-12-11 14:00:00</span>
+            <span>Customer: Wang (Atrip USD)</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="index-en.html">Overview</a><span>›</span>
+            <a href="airline-list-en.html">Airline List</a><span>›</span>
+            IndiGo (6E)
+        </div>
+
+        <div class="airline-header">
+            <div class="airline-info">
+                <div class="airline-logo">6E</div>
+                <div>
+                    <div class="airline-name">IndiGo (6E)</div>
+                </div>
+            </div>
+            <div class="airline-actions">
+                <span class="status-badge online">Online</span>
+                <button class="action-btn starred" onclick="toggleFollow(this)">★ Following</button>
+                <button class="action-btn primary">View Airline Capabilities →</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div><span class="section-title">Platform Performance</span><span class="section-subtitle">(This airline's overall performance on Atlas)</span></div>
+                <div class="time-selector">
+                    <button class="time-btn">Yesterday</button>
+                    <button class="time-btn active">Last 7 Days</button>
+                    <button class="time-btn">Last 30 Days</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="platform-data-grid">
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Platform Verify Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Platform Offer Verification Success Rate</div>
+                                    This airline's overall verification success rate on the Atlas platform.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">98.5%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Platform Verify Chg
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Platform Offer Price Change Rate</div>
+                                    This airline's overall verification price change rate on the Atlas platform.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">4.8%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Platform Booking Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Platform Order Creation Success Rate</div>
+                                    This airline's overall order creation success rate on the Atlas platform.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">96.2%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Platform Booking Chg
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Platform Order Price Change Rate</div>
+                                    This airline's overall order price change rate on the Atlas platform.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">2.3%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Platform Ticketing Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Platform Ticketing Success Rate</div>
+                                    This airline's overall ticketing success rate on the Atlas platform.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">97.2%</div>
+                    </div>
+                    <div class="availability-stat">
+                        <div class="availability-value">99.8%</div>
+                        <div class="availability-label">
+                            Uptime Ratio
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Uptime Ratio</div>
+                                    The percentage of time this airline provided normal service in the past 30 days.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                            <br>(Last 30 Days)
+                        </div>
+                    </div>
+                </div>
+                <div class="subsection-label">
+                    Fault/Offline Records (Last 30 Days)
+                    <span class="info-icon">ⓘ
+                        <div class="tooltip">
+                            <div class="tooltip-title">Outage History</div>
+                            Historical fault records of this airline, including fault reason, start time, recovery time and duration.
+                            <div class="tooltip-refresh">🔄 Refresh: Every 5 minutes</div>
+                        </div>
+                    </span>
+                </div>
+                <div class="fault-record">
+                    <div class="fault-record-header">
+                        <span class="fault-record-title">Scheduled Maintenance</span>
+                        <span class="fault-record-time">2025-12-05 02:00 - 04:30</span>
+                    </div>
+                    <div class="fault-record-reason">Airline system upgrade, service suspended</div>
+                    <div class="fault-record-duration">Duration: 2h 30min</div>
+                </div>
+                <div class="fault-record">
+                    <div class="fault-record-header">
+                        <span class="fault-record-title">API Exception</span>
+                        <span class="fault-record-time">2025-11-28 14:20 - 15:45</span>
+                    </div>
+                    <div class="fault-record-reason">Airline API timeout, auto recovered</div>
+                    <div class="fault-record-duration">Duration: 1h 25min</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div><span class="section-title">My Performance</span><span class="section-subtitle">(Your data with this airline)</span></div>
+                <div class="time-selector">
+                    <button class="time-btn">Yesterday</button>
+                    <button class="time-btn active">Last 7 Days</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="subsection-label">Booking Flow Success Rates</div>
+                <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px;">
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Search Result Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Shop Result Rate</div>
+                                    The percentage of search requests that returned flight results for this airline.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">94.2%</div>
+                        <div class="data-card-trend trend-up">↑ 0.5%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Verify Success Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Offer Verification Success Rate</div>
+                                    The percentage of successful valid quotes in your verification requests for this airline.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">96.8%</div>
+                        <div class="data-card-trend trend-up">↑ 1.2%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Verify Price Chg
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Offer Price Change Rate</div>
+                                    The percentage of price discrepancies between verification and search for this airline.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">4.2%</div>
+                        <div class="data-card-trend trend-up">↓ 0.3%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Booking Success Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Order Creation Success Rate</div>
+                                    The percentage of successful order creations for this airline.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">94.5%</div>
+                        <div class="data-card-trend trend-up">↑ 0.8%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Booking Price Chg
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Order Price Change Rate</div>
+                                    The percentage of price discrepancies between booking and verification for this airline.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">2.1%</div>
+                        <div class="data-card-trend trend-up">↓ 0.2%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Ticketing Success Rate
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Ticketing Success Rate</div>
+                                    The percentage of successful ticketing for this airline.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value success">97.2%</div>
+                        <div class="data-card-trend trend-up">↑ 0.4%</div>
+                    </div>
+                </div>
+                <div class="subsection-label">Trend Charts</div>
+                <div class="grid-2">
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
+                            Verify Success Rate Trend (Last 7 Days)
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Offer Verification Success Rate Trend</div>
+                                    Trend line chart showing verification success rate changes over 7/30 days.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="chart-placeholder">📈 Line Chart: 12/4: 95.2% → 12/10: 96.8%</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
+                            Ticketing Success Rate Trend (Last 7 Days)
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Ticketing Success Rate Trend</div>
+                                    Trend line chart showing ticketing success rate changes over 7/30 days.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="chart-placeholder">📈 Line Chart: 12/4: 96.5% → 12/10: 97.2%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div><span class="section-title">Route List</span><span class="section-subtitle">(Your data with this airline)</span></div>
+                <div class="time-selector">
+                    <button class="time-btn">Yesterday</button>
+                    <button class="time-btn active">Last 7 Days</button>
+                    <button class="time-btn">Last 30 Days</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="section-filter">
+                    <input type="text" class="filter-input" placeholder="Search route (e.g. DEL-BOM)" style="width: 200px;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+                        <input type="checkbox" checked> Show only routes with data
+                    </label>
+                </div>
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Route (O&D)</th>
+                            <th>Cities</th>
+                            <th>Type</th>
+                            <th class="sortable">
+                                <span class="th-label">Verify Rate ↓
+                                    <span class="info-icon">ⓘ
+                                        <div class="tooltip">
+                                            <div class="tooltip-title">Offer Verification Success Rate</div>
+                                            The percentage of successful valid quotes for this route.
+                                            <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </th>
+                            <th class="sortable">
+                                <span class="th-label">Verify Chg
+                                    <span class="info-icon">ⓘ
+                                        <div class="tooltip">
+                                            <div class="tooltip-title">Offer Price Change Rate</div>
+                                            The percentage of price discrepancies for this route.
+                                            <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </th>
+                            <th class="sortable">
+                                <span class="th-label">Booking Rate
+                                    <span class="info-icon">ⓘ
+                                        <div class="tooltip">
+                                            <div class="tooltip-title">Order Creation Success Rate</div>
+                                            The percentage of successful order creations for this route.
+                                            <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </th>
+                            <th class="sortable">
+                                <span class="th-label">Booking Chg
+                                    <span class="info-icon">ⓘ
+                                        <div class="tooltip">
+                                            <div class="tooltip-title">Order Price Change Rate</div>
+                                            The percentage of price discrepancies from verification to booking for this route.
+                                            <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </th>
+                            <th class="sortable">
+                                <span class="th-label">Ticketing Rate
+                                    <span class="info-icon">ⓘ
+                                        <div class="tooltip">
+                                            <div class="tooltip-title">Ticketing Success Rate</div>
+                                            The percentage of successful ticketing for this route.
+                                            <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DEL → BOM</strong></td>
+                            <td>Delhi → Mumbai</td>
+                            <td>Direct</td>
+                            <td><span class="rate-value success">98.2%</span></td>
+                            <td><span class="rate-value success">3.1%</span></td>
+                            <td><span class="rate-value success">96.5%</span></td>
+                            <td><span class="rate-value success">1.8%</span></td>
+                            <td><span class="rate-value success">98.5%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>BLR → DEL</strong></td>
+                            <td>Bangalore → Delhi</td>
+                            <td>Direct</td>
+                            <td><span class="rate-value success">97.8%</span></td>
+                            <td><span class="rate-value success">3.5%</span></td>
+                            <td><span class="rate-value success">95.2%</span></td>
+                            <td><span class="rate-value success">2.2%</span></td>
+                            <td><span class="rate-value success">97.8%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DEL → CCU</strong></td>
+                            <td>Delhi → Kolkata</td>
+                            <td>Direct</td>
+                            <td><span class="rate-value success">96.5%</span></td>
+                            <td><span class="rate-value success">4.2%</span></td>
+                            <td><span class="rate-value success">94.8%</span></td>
+                            <td><span class="rate-value success">2.5%</span></td>
+                            <td><span class="rate-value success">97.1%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>HYD → BOM</strong></td>
+                            <td>Hyderabad → Mumbai</td>
+                            <td>Direct</td>
+                            <td><span class="rate-value success">95.8%</span></td>
+                            <td><span class="rate-value success">5.1%</span></td>
+                            <td><span class="rate-value success">93.6%</span></td>
+                            <td><span class="rate-value success">3.2%</span></td>
+                            <td><span class="rate-value success">96.2%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>MAA → DEL</strong></td>
+                            <td>Chennai → Delhi</td>
+                            <td>Direct</td>
+                            <td><span class="rate-value success">94.2%</span></td>
+                            <td><span class="rate-value warning">6.8%</span></td>
+                            <td><span class="rate-value success">92.1%</span></td>
+                            <td><span class="rate-value success">3.8%</span></td>
+                            <td><span class="rate-value success">95.5%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DEL → SIN</strong></td>
+                            <td>Delhi → Singapore</td>
+                            <td>Direct</td>
+                            <td><span class="rate-value warning">88.5%</span></td>
+                            <td><span class="rate-value warning">9.2%</span></td>
+                            <td><span class="rate-value warning">86.8%</span></td>
+                            <td><span class="rate-value success">5.5%</span></td>
+                            <td><span class="rate-value success">91.2%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <div class="pagination-info">Total 156 routes, 10 per page</div>
+                    <div class="pagination-btns">
+                        <button class="page-btn" disabled>Previous</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">...</button>
+                        <button class="page-btn">16</button>
+                        <button class="page-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleFollow(btn) {
+            if (btn.classList.contains('starred')) {
+                btn.classList.remove('starred');
+                btn.innerHTML = '☆ Follow';
+            } else {
+                btn.classList.add('starred');
+                btn.innerHTML = '★ Following';
+            }
+        }
+        document.querySelectorAll('.time-selector').forEach(selector => {
+            selector.querySelectorAll('.time-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    selector.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
