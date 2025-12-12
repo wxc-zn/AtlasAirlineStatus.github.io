@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndiGo (6E) 详情 | Atlas</title>
+    <style>
+        :root {
+            --bg-primary: #f5f5f5;
+            --bg-white: #ffffff;
+            --border-color: #e8e8e8;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --text-muted: #8c8c8c;
+            --primary-color: #1890ff;
+            --success-color: #52c41a;
+            --warning-color: #faad14;
+            --error-color: #ff4d4f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg-primary); color: var(--text-primary); font-size: 14px; line-height: 1.5; }
+        .header { background: var(--bg-white); border-bottom: 1px solid var(--border-color); padding: 0 24px; height: 48px; display: flex; align-items: center; justify-content: space-between; }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .logo { font-size: 16px; font-weight: 600; color: var(--primary-color); }
+        .nav-tabs { display: flex; gap: 4px; }
+        .nav-tab { padding: 12px 16px; color: var(--text-secondary); text-decoration: none; border-bottom: 2px solid transparent; }
+        .nav-tab:hover { color: var(--primary-color); }
+        .nav-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--text-muted); }
+        .lang-switch { display: flex; gap: 4px; margin-left: 8px; }
+        .lang-btn { padding: 2px 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px; color: var(--text-secondary); text-decoration: none; }
+        .lang-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .main-content { padding: 24px; max-width: 1400px; margin: 0 auto; }
+        .breadcrumb { font-size: 13px; margin-bottom: 16px; }
+        .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--primary-color); }
+        .breadcrumb span { color: var(--text-muted); margin: 0 8px; }
+        .airline-header { background: var(--bg-white); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px 24px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .airline-info { display: flex; align-items: center; gap: 16px; }
+        .airline-logo { width: 48px; height: 48px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-secondary); }
+        .airline-name { font-size: 20px; font-weight: 500; }
+        .airline-actions { display: flex; gap: 12px; align-items: center; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 13px; }
+        .status-badge.online { background: #f6ffed; color: #52c41a; }
+        .action-btn { padding: 6px 16px; border: 1px solid var(--border-color); background: var(--bg-white); border-radius: 4px; font-size: 13px; cursor: pointer; }
+        .action-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .action-btn.primary { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .action-btn.starred { color: var(--warning-color); border-color: var(--warning-color); }
+        .section { background: var(--bg-white); border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 24px; }
+        .section-header { padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .section-title { font-size: 14px; font-weight: 500; }
+        .section-subtitle { font-size: 12px; color: var(--text-muted); margin-left: 8px; }
+        .section-body { padding: 16px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .time-selector { display: flex; gap: 4px; }
+        .time-btn { padding: 4px 12px; border: 1px solid var(--border-color); background: var(--bg-white); border-radius: 4px; font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+        .time-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .time-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .data-card { background: #fafafa; border-radius: 4px; padding: 16px; text-align: center; }
+        .data-card-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .data-card-value { font-size: 24px; font-weight: 500; }
+        .data-card-value.success { color: var(--success-color); }
+        .data-card-value.warning { color: var(--warning-color); }
+        .data-card-trend { font-size: 12px; margin-top: 4px; }
+        .trend-up { color: var(--success-color); }
+        .simple-table { width: 100%; border-collapse: collapse; }
+        .simple-table th, .simple-table td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 13px; }
+        .simple-table th { font-weight: 500; color: var(--text-muted); background: #fafafa; }
+        .simple-table tr:hover td { background: #fafafa; }
+        .rate-value { font-weight: 500; }
+        .rate-value.success { color: var(--success-color); }
+        .rate-value.warning { color: var(--warning-color); }
+        .chart-placeholder { height: 200px; background: #fafafa; border: 1px dashed var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 13px; }
+        .fault-record { padding: 12px; background: #fafafa; border-radius: 4px; margin-bottom: 8px; }
+        .fault-record:last-child { margin-bottom: 0; }
+        .fault-record-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .fault-record-title { font-size: 13px; font-weight: 500; }
+        .fault-record-time { font-size: 12px; color: var(--text-muted); }
+        .fault-record-reason { font-size: 13px; color: var(--text-secondary); }
+        .fault-record-duration { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .filter-input { padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px; }
+        .pagination { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 16px; border-top: 1px solid var(--border-color); }
+        .pagination-info { font-size: 13px; color: var(--text-muted); }
+        .pagination-btns { display: flex; gap: 4px; }
+        .page-btn { padding: 4px 10px; border: 1px solid var(--border-color); background: var(--bg-white); border-radius: 4px; font-size: 13px; cursor: pointer; }
+        .page-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+        .availability-stat { display: flex; align-items: center; gap: 16px; padding: 12px; background: #fafafa; border-radius: 4px; }
+        .availability-value { font-size: 32px; font-weight: 500; color: var(--success-color); }
+        .availability-label { font-size: 13px; color: var(--text-muted); }
+        .info-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: var(--border-color); color: var(--text-muted); font-size: 10px; cursor: help; position: relative; }
+        .info-icon:hover { background: var(--primary-color); color: white; }
+        .tooltip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; width: 240px; text-align: left; visibility: hidden; opacity: 0; z-index: 100; margin-bottom: 8px; font-weight: normal; }
+        .tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: rgba(0,0,0,0.85); }
+        .info-icon:hover .tooltip { visibility: visible; opacity: 1; }
+        .tooltip-title { font-weight: 500; margin-bottom: 4px; }
+        .tooltip-refresh { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .tooltip-compare { font-size: 11px; color: rgba(255,255,255,0.85); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .th-label { display: flex; align-items: center; gap: 4px; }
+        .subsection-label { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .platform-data-grid { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 12px; margin-bottom: 16px; }
+        .platform-data-grid .data-card { padding: 12px; }
+        .platform-data-grid .data-card-value { font-size: 20px; }
+        .view-more-btn { padding: 4px 12px; border: 1px solid var(--primary-color); background: var(--bg-white); color: var(--primary-color); border-radius: 4px; font-size: 12px; cursor: pointer; }
+        .view-more-btn:hover { background: var(--primary-color); color: white; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: var(--bg-white); border-radius: 4px; width: 700px; max-height: 80vh; overflow: hidden; }
+        .modal-header { padding: 16px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-size: 16px; font-weight: 500; }
+        .modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-muted); }
+        .modal-body { padding: 24px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">Atlas 航司状态</div>
+            <nav class="nav-tabs">
+                <a href="index-zh.html" class="nav-tab">总览</a>
+                <a href="airline-list-zh.html" class="nav-tab">航司列表</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span>更新时间: 2025-12-11 22:00:00 (UTC+8)</span>
+            <span>客户: 王先生 (Atrip USD)</span>
+            <div class="lang-switch">
+                <a href="airline-detail-en.html" class="lang-btn">EN</a>
+                <a href="airline-detail-zh.html" class="lang-btn active">中文</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="index-zh.html">总览</a><span>›</span>
+            <a href="airline-list-zh.html">航司列表</a><span>›</span>
+            IndiGo (6E)
+        </div>
+
+        <div class="airline-header">
+            <div class="airline-info">
+                <div class="airline-logo">6E</div>
+                <div>
+                    <div class="airline-name">IndiGo (6E)</div>
+                </div>
+            </div>
+            <div class="airline-actions">
+                <span class="status-badge online">在线</span>
+                <button class="action-btn starred" onclick="toggleFollow(this)">★ 已关注</button>
+                <button class="action-btn primary">查看航司能力 →</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div><span class="section-title">平台数据表现</span><span class="section-subtitle">（该航司在Atlas平台的整体表现）</span></div>
+                <div class="time-selector">
+                    <button class="time-btn">昨日</button>
+                    <button class="time-btn active">近7天</button>
+                    <button class="time-btn">近30天</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="platform-data-grid">
+                    <div class="data-card">
+                        <div class="data-card-label">平台验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">平台验价成功率</div>该航司在Atlas平台整体的验价成功率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">98.5%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">平台验价变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">平台验价变价率</div>该航司在Atlas平台整体的验价变价率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">4.8%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">平台生单成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">平台生单成功率</div>该航司在Atlas平台整体的生单成功率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">96.2%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">平台生单变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">平台生单变价率</div>该航司在Atlas平台整体的生单变价率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">2.3%</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">平台出票成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">平台出票成功率</div>该航司在Atlas平台整体的出票成功率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">97.2%</div>
+                    </div>
+                    <div class="availability-stat">
+                        <div class="availability-value">99.8%</div>
+                        <div class="availability-label">可用时长<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">可用时长比例</div>该航司在过去30天内正常服务的时间占比。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span><br>(近30天)</div>
+                    </div>
+                </div>
+                <div class="subsection-label" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>维护记录 (近30天)<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">维护记录</div>该航司的历史维护记录，包含原因、开始时间、恢复时间和持续时长。<div class="tooltip-refresh">🔄 每5分钟刷新</div></div></span></span>
+                    <button class="view-more-btn" onclick="showModal('maintenanceModal')">查看更多 →</button>
+                </div>
+                <div class="fault-record">
+                    <div class="fault-record-header">
+                        <span class="fault-record-title">计划维护</span>
+                        <span class="fault-record-time">2025-12-05 10:00:00 - 12:30:00 (UTC+8)</span>
+                    </div>
+                    <div class="fault-record-reason">航司系统升级，暂停服务</div>
+                    <div class="fault-record-duration">持续时长: 2小时30分钟</div>
+                </div>
+                <div class="fault-record">
+                    <div class="fault-record-header">
+                        <span class="fault-record-title">API异常</span>
+                        <span class="fault-record-time">2025-11-28 22:20:33 - 23:45:18 (UTC+8)</span>
+                    </div>
+                    <div class="fault-record-reason">航司API超时，自动恢复</div>
+                    <div class="fault-record-duration">持续时长: 1小时25分钟</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div><span class="section-title">我的数据表现</span><span class="section-subtitle">（您在该航司的数据）</span></div>
+                <div class="time-selector">
+                    <button class="time-btn">昨日</button>
+                    <button class="time-btn active">近7天</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="subsection-label">预订流程各环节成功率</div>
+                <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px;">
+                    <div class="data-card">
+                        <div class="data-card-label">搜索有结果率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">搜索有结果率</div>您在该航司的搜索请求中，成功返回航班结果的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">94.2%</div>
+                        <div class="data-card-trend trend-up">↑ 0.5% 环比</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率</div>您在该航司的验价请求中，成功获取有效报价的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">96.8%</div>
+                        <div class="data-card-trend trend-up">↑ 1.2% 环比</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">验价变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率</div>您在该航司验价时，价格与搜索价格不一致的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">4.2%</div>
+                        <div class="data-card-trend trend-up">↓ 0.3% 环比</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">生单成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率</div>您在该航司的订单创建请求中，成功创建订单的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">94.5%</div>
+                        <div class="data-card-trend trend-up">↑ 0.8% 环比</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">生单变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率</div>您在该航司创建订单时，价格与验价价格不一致的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">2.1%</div>
+                        <div class="data-card-trend trend-up">↓ 0.2% 环比</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">出票成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">出票成功率</div>您在该航司的出票请求中，成功出票的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></div>
+                        <div class="data-card-value success">97.2%</div>
+                        <div class="data-card-trend trend-up">↑ 0.4% 环比</div>
+                    </div>
+                </div>
+                <div class="subsection-label">趋势图表</div>
+                <div class="grid-2">
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">验价成功率趋势 (近7天)</div>
+                        <div class="chart-placeholder">📈 折线图: 12/4: 95.2% → 12/10: 96.8%</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">出票成功率趋势 (近7天)</div>
+                        <div class="chart-placeholder">📈 折线图: 12/4: 96.5% → 12/10: 97.2%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div><span class="section-title">航线列表</span><span class="section-subtitle">（您在该航司的数据）</span></div>
+                <div class="time-selector">
+                    <button class="time-btn">昨日</button>
+                    <button class="time-btn active">近7天</button>
+                    <button class="time-btn">近30天</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div style="margin-bottom: 16px;">
+                    <input type="text" class="filter-input" placeholder="搜索航线 (如 DEL-BOM)" style="width: 200px;">
+                </div>
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>航线 (O&D)</th>
+                            <th>城市</th>
+                            <th>类型</th>
+                            <th><span class="th-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率</div>您在该航线的验价成功率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                            <th><span class="th-label">验价变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率</div>您在该航线的验价变价率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                            <th><span class="th-label">生单成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率</div>您在该航线的生单成功率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                            <th><span class="th-label">生单变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率</div>您在该航线的生单变价率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                            <th><span class="th-label">出票成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">出票成功率</div>您在该航线的出票成功率。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DEL → BOM</strong></td>
+                            <td>德里 → 孟买</td>
+                            <td>直飞</td>
+                            <td><span class="rate-value success">98.2%</span></td>
+                            <td><span class="rate-value success">3.1%</span></td>
+                            <td><span class="rate-value success">96.5%</span></td>
+                            <td><span class="rate-value success">1.8%</span></td>
+                            <td><span class="rate-value success">98.5%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>BLR → DEL</strong></td>
+                            <td>班加罗尔 → 德里</td>
+                            <td>直飞</td>
+                            <td><span class="rate-value success">97.8%</span></td>
+                            <td><span class="rate-value success">3.5%</span></td>
+                            <td><span class="rate-value success">95.2%</span></td>
+                            <td><span class="rate-value success">2.2%</span></td>
+                            <td><span class="rate-value success">97.8%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DEL → CCU</strong></td>
+                            <td>德里 → 加尔各答</td>
+                            <td>直飞</td>
+                            <td><span class="rate-value success">96.5%</span></td>
+                            <td><span class="rate-value success">4.2%</span></td>
+                            <td><span class="rate-value success">94.8%</span></td>
+                            <td><span class="rate-value success">2.5%</span></td>
+                            <td><span class="rate-value success">97.1%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DEL → SIN</strong></td>
+                            <td>德里 → 新加坡</td>
+                            <td>直飞</td>
+                            <td><span class="rate-value warning">88.5%</span></td>
+                            <td><span class="rate-value warning">9.2%</span></td>
+                            <td><span class="rate-value warning">86.8%</span></td>
+                            <td><span class="rate-value success">5.5%</span></td>
+                            <td><span class="rate-value success">91.2%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <div class="pagination-info">共 156 条航线，每页 10 条</div>
+                    <div class="pagination-btns">
+                        <button class="page-btn" disabled>上一页</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">...</button>
+                        <button class="page-btn">16</button>
+                        <button class="page-btn">下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 维护记录弹窗 -->
+    <div class="modal-overlay" id="maintenanceModal">
+        <div class="modal">
+            <div class="modal-header"><span class="modal-title">维护记录 (近30天)</span><button class="modal-close" onclick="hideModal('maintenanceModal')">×</button></div>
+            <div class="modal-body">
+                <table class="simple-table">
+                    <thead><tr><th>类型</th><th>原因</th><th>开始时间 (UTC+8)</th><th>结束时间 (UTC+8)</th><th>时长</th></tr></thead>
+                    <tbody>
+                        <tr><td>计划维护</td><td>航司系统升级</td><td>2025-12-05 10:00:00</td><td>2025-12-05 12:30:00</td><td>2小时30分</td></tr>
+                        <tr><td>API异常</td><td>航司API超时</td><td>2025-11-28 22:20:33</td><td>2025-11-28 23:45:18</td><td>1小时25分</td></tr>
+                        <tr><td>人工关闭</td><td>数据质量验证</td><td>2025-11-20 16:00:00</td><td>2025-11-20 20:00:00</td><td>4小时</td></tr>
+                        <tr><td>计划维护</td><td>支付系统维护</td><td>2025-11-15 09:00:00</td><td>2025-11-15 11:00:00</td><td>2小时</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(id) { document.getElementById(id).classList.add('show'); }
+        function hideModal(id) { document.getElementById(id).classList.remove('show'); }
+        document.querySelectorAll('.modal-overlay').forEach(o => { o.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); }); });
+        function toggleFollow(btn) {
+            if (btn.classList.contains('starred')) {
+                btn.classList.remove('starred');
+                btn.innerHTML = '☆ 关注';
+            } else {
+                btn.classList.add('starred');
+                btn.innerHTML = '★ 已关注';
+            }
+        }
+        document.querySelectorAll('.time-selector').forEach(selector => {
+            selector.querySelectorAll('.time-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    selector.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

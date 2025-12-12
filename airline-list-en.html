@@ -41,6 +41,10 @@
         .nav-tab:hover { color: var(--primary-color); }
         .nav-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
         .header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--text-muted); }
+        .lang-switch { display: flex; gap: 4px; margin-left: 8px; }
+        .lang-btn { padding: 2px 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px; color: var(--text-secondary); text-decoration: none; }
+        .lang-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
         .main-content { padding: 24px; max-width: 1400px; margin: 0 auto; }
         .page-title { font-size: 20px; font-weight: 500; margin-bottom: 24px; color: var(--text-primary); }
         .filter-bar {
@@ -82,7 +86,8 @@
         .star-btn.active { color: var(--warning-color); }
         .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
         .status-badge.online { background: #f6ffed; color: #52c41a; }
-        .status-badge.fault { background: #fff2f0; color: #ff4d4f; }
+        .status-badge.maintenance { background: #fff2f0; color: #ff4d4f; }
+        .not-activated { display: inline-block; padding: 1px 6px; background: #f0f0f0; color: var(--text-muted); border-radius: 3px; font-size: 11px; margin-left: 6px; }
         .status-badge.balance { background: #fffbe6; color: #d48806; }
         .rate-value { font-weight: 500; }
         .rate-value.success { color: var(--success-color); }
@@ -164,6 +169,10 @@
         <div class="header-right">
             <span>Last Updated: 2025-12-11 14:00:00</span>
             <span>Customer: Wang (Atrip USD)</span>
+            <div class="lang-switch">
+                <a href="airline-list-en.html" class="lang-btn active">EN</a>
+                <a href="airline-list-zh.html" class="lang-btn">中文</a>
+            </div>
         </div>
     </header>
 
@@ -220,7 +229,7 @@
                                 <span class="info-icon">ⓘ
                                     <div class="tooltip">
                                         <div class="tooltip-title">Status</div>
-                                        Current operating status: Online / Maintenance / Fault / Low Balance
+                                        Current operating status: Online / Maintenance / Low Balance
                                         <div class="tooltip-refresh">🔄 Refresh: Every 5 minutes</div>
                                     </div>
                                 </span>
@@ -332,7 +341,7 @@
                                 <span class="info-icon">ⓘ
                                     <div class="tooltip">
                                         <div class="tooltip-title">Status</div>
-                                        Current operating status: Online / Maintenance / Fault / Low Balance
+                                        Current operating status: Online / Maintenance / Low Balance
                                         <div class="tooltip-refresh">🔄 Refresh: Every 5 minutes</div>
                                     </div>
                                 </span>
@@ -408,7 +417,7 @@
                     </tr>
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                        <td><a href="airline-detail-en.html">Azul Airlines (AD)</a></td>
+                        <td><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated">Not Activated</span></td>
                         <td><span class="status-badge online">Online</span></td>
                         <td><span class="rate-value success">93.5%</span></td>
                         <td><span class="rate-value success">5.4%</span></td>
@@ -418,7 +427,7 @@
                     </tr>
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                        <td><a href="airline-detail-en.html">Lion Airlines (JT)</a></td>
+                        <td><a href="airline-detail-en.html">Lion Airlines (JT)</a><span class="not-activated">Not Activated</span></td>
                         <td><span class="status-badge online">Online</span></td>
                         <td><span class="rate-value success">92.8%</span></td>
                         <td><span class="rate-value success">7.1%</span></td>
@@ -459,7 +468,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Pegasus (PC)</a></td>
-                        <td><span class="status-badge fault">Maintenance</span></td>
+                        <td><span class="status-badge maintenance">Maintenance</span></td>
                         <td><span class="rate-value error">78.5%</span></td>
                         <td><span class="rate-value warning">9.7%</span></td>
                         <td><span class="rate-value error">75.2%</span></td>
@@ -469,7 +478,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Vueling (VY)</a></td>
-                        <td><span class="status-badge fault">Maintenance</span></td>
+                        <td><span class="status-badge maintenance">Maintenance</span></td>
                         <td><span class="rate-value error">72.3%</span></td>
                         <td><span class="rate-value warning">11.3%</span></td>
                         <td><span class="rate-value error">70.8%</span></td>
@@ -479,7 +488,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">AirAsia (AK)</a></td>
-                        <td><span class="status-badge fault">Maintenance</span></td>
+                        <td><span class="status-badge maintenance">Maintenance</span></td>
                         <td><span class="rate-value">-</span></td>
                         <td><span class="rate-value">-</span></td>
                         <td><span class="rate-value">-</span></td>
@@ -533,4 +542,3 @@
     </script>
 </body>
 </html>
-
