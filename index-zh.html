@@ -167,7 +167,19 @@
                     <div class="section-title">📢 动态公告</div>
                     <div class="section-subtitle">维护/恢复: 仅您开通的航司 | 新上线/余额: 全部航司</div>
                 </div>
-                <button class="view-more-btn" onclick="showModal('announcementModal')">查看更多 →</button>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="filter-group">
+                        <span class="filter-label" style="font-size: 12px; margin-right: 8px;">类型</span>
+                        <select class="filter-select" style="padding: 4px 8px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-white);">
+                            <option value="">全部</option>
+                            <option value="maintenance">维护</option>
+                            <option value="recover">恢复</option>
+                            <option value="balance">余额不足</option>
+                            <option value="new">新上线</option>
+                        </select>
+                    </div>
+                    <button class="view-more-btn" onclick="showModal('announcementModal')">查看更多 →</button>
+                </div>
             </div>
             <div class="section-body">
                 <ul class="notice-list">
@@ -225,11 +237,25 @@
                     <div class="ranking-section">
                         <div class="ranking-label">航司热门度 Top10<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">航司热门度排名 Top10</div>按订单量排序，订单量最高的10家航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
                         <ul class="ranking-list">
-                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">IndiGo (6E)</a></span><span class="ranking-value">12,580</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></span><span class="ranking-value">8,920</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Frontier (F9)</a></span><span class="ranking-value">6,350</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></span><span class="ranking-value">5,420</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="not-activated">未开通</span></span><span class="ranking-value">4,180</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">IndiGo (6E)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Frontier (F9)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="not-activated">未开通</span></span></li>
+                        </ul>
+                        <div class="ranking-pagination">
+                            <button class="ranking-page-btn active">1-5</button>
+                            <button class="ranking-page-btn">6-10</button>
+                        </div>
+                    </div>
+                    <div class="ranking-section">
+                        <div class="ranking-label">航线热门度 Top10<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">航线热门度排名 Top10</div>按订单量排序，订单量最高的10条航线。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                        <ul class="ranking-list">
+                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name">DEL-BOM (德里-孟买)</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name">LAS-LAX (拉斯维加斯-洛杉矶)</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name">DEN-PHX (丹佛-凤凰城)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name">GRU-CGH (圣保罗-圣保罗)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name">CGK-SUB (雅加达-泗水)</span></li>
                         </ul>
                         <div class="ranking-pagination">
                             <button class="ranking-page-btn active">1-5</button>
@@ -289,6 +315,10 @@
                     <div class="section-subtitle">基于您的API调用数据</div>
                 </div>
                 <div class="time-selector">
+                    <button class="time-btn">15分钟</button>
+                    <button class="time-btn">30分钟</button>
+                    <button class="time-btn">1小时</button>
+                    <button class="time-btn">4小时</button>
                     <button class="time-btn">昨日</button>
                     <button class="time-btn active">近7天</button>
                 </div>
@@ -332,9 +362,19 @@
                         <div class="section-title">我的航司 - 成功率排名</div>
                         <div class="section-subtitle">最高/最低表现</div>
                     </div>
-                    <div class="time-selector">
-                        <button class="time-btn">昨日</button>
-                        <button class="time-btn active">近7天</button>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <select style="padding: 4px 8px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-white);">
+                            <option value="bottom5">Bottom5</option>
+                            <option value="top5">Top5</option>
+                        </select>
+                        <div class="time-selector">
+                            <button class="time-btn">15分钟</button>
+                            <button class="time-btn">30分钟</button>
+                            <button class="time-btn">1小时</button>
+                            <button class="time-btn">4小时</button>
+                            <button class="time-btn">昨日</button>
+                            <button class="time-btn active">近7天</button>
+                        </div>
                     </div>
                 </div>
                 <div class="section-body">
@@ -378,6 +418,10 @@
                         <div class="section-subtitle">数值越高=波动越大</div>
                     </div>
                     <div class="time-selector">
+                        <button class="time-btn">15分钟</button>
+                        <button class="time-btn">30分钟</button>
+                        <button class="time-btn">1小时</button>
+                        <button class="time-btn">4小时</button>
                         <button class="time-btn">昨日</button>
                         <button class="time-btn active">近7天</button>
                     </div>
@@ -403,6 +447,10 @@
                         <div class="section-subtitle">数值越高=波动越大</div>
                     </div>
                     <div class="time-selector">
+                        <button class="time-btn">15分钟</button>
+                        <button class="time-btn">30分钟</button>
+                        <button class="time-btn">1小时</button>
+                        <button class="time-btn">4小时</button>
                         <button class="time-btn">昨日</button>
                         <button class="time-btn active">近7天</button>
                     </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -127,7 +127,7 @@
         .notice-item:last-child { border-bottom: none; }
         .notice-tag { padding: 2px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap; }
         .notice-tag.new { background: #e6f7ff; color: #1890ff; }
-        .notice-tag.maintenance { background: #fff2f0; color: #ff4d4f; }
+        .notice-tag.fault { background: #fff2f0; color: #ff4d4f; }
         .notice-tag.recover { background: #f6ffed; color: #52c41a; }
         .notice-tag.balance { background: #fffbe6; color: #d48806; }
         .notice-content { flex: 1; font-size: 13px; }
@@ -207,7 +207,6 @@
         .info-icon:hover .tooltip { visibility: visible; opacity: 1; }
         .tooltip-title { font-weight: 500; margin-bottom: 4px; color: #fff; }
         .tooltip-refresh { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
-        .tooltip-compare { font-size: 11px; color: rgba(255,255,255,0.85); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
         .ranking-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         .ranking-section { margin-bottom: 16px; }
         .ranking-section:last-child { margin-bottom: 0; }
@@ -218,7 +217,6 @@
         .ranking-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .view-more-btn { padding: 4px 12px; border: 1px solid var(--primary-color); background: var(--bg-white); color: var(--primary-color); border-radius: 4px; font-size: 12px; cursor: pointer; }
         .view-more-btn:hover { background: var(--primary-color); color: white; }
-        .not-activated { display: inline-block; padding: 1px 6px; background: #f0f0f0; color: var(--text-muted); border-radius: 3px; font-size: 11px; margin-left: 6px; }
     </style>
 </head>
 <body>
@@ -271,22 +269,34 @@
             </div>
         </div>
 
-        <!-- 3.3 动态公告模块 - 放在显眼位置 -->
+        <!-- 3.2.2 平台动态公告 - 放在显眼位置 -->
         <div class="section highlight">
             <div class="section-header">
                 <div>
-                    <div class="section-title">📢 Announcements</div>
-                    <div class="section-subtitle">Maintenance/Recovered: Your airlines only | New/Balance: All airlines</div>
+                    <div class="section-title">📢 Platform Announcements</div>
+                    <div class="section-subtitle">New airlines, maintenance notices, recovery updates</div>
                 </div>
-                <button class="view-more-btn" onclick="showModal('announcementModal')">View More →</button>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="filter-group">
+                        <span class="filter-label" style="font-size: 12px; margin-right: 8px;">Type</span>
+                        <select class="filter-select" style="padding: 4px 8px; font-size: 12px;">
+                            <option value="">All</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="recover">Recovered</option>
+                            <option value="balance">Low Balance</option>
+                            <option value="new">New Airline</option>
+                        </select>
+                    </div>
+                    <button class="view-more-btn" onclick="showModal('announcementModal')">View More →</button>
+                </div>
             </div>
             <div class="section-body">
                 <ul class="notice-list">
-                    <li class="notice-item"><span class="notice-tag maintenance">Maintenance</span><span class="notice-content"><a href="airline-detail-en.html">Vueling (VY)</a> suspended due to data quality issues</span><span class="notice-time">2025-12-11 12:30:45 (UTC)</span></li>
-                    <li class="notice-item"><span class="notice-tag maintenance">Maintenance</span><span class="notice-content"><a href="airline-detail-en.html">Pegasus (PC)</a> API response abnormal</span><span class="notice-time">2025-12-11 09:15:22 (UTC)</span></li>
-                    <li class="notice-item"><span class="notice-tag balance">Balance</span><span class="notice-content"><a href="airline-detail-en.html">Ryanair (FR)</a> balance below warning threshold</span><span class="notice-time">2025-12-11 13:05:18 (UTC)</span></li>
-                    <li class="notice-item"><span class="notice-tag recover">Recovered</span><span class="notice-content"><a href="airline-detail-en.html">Scoot (TR)</a> restored, maintenance lasted 3h</span><span class="notice-time">2025-12-10 18:42:33 (UTC)</span></li>
-                    <li class="notice-item"><span class="notice-tag new">New</span><span class="notice-content"><a href="airline-detail-en.html">Bamboo Airways (QH)</a> launched</span><span class="notice-time">2025-12-08 00:00:00 (UTC)</span></li>
+                    <li class="notice-item"><span class="notice-tag fault">Maintenance</span><span class="notice-content"><a href="airline-detail-en.html">Vueling (VY)</a> suspended due to data quality issues</span><span class="notice-time">2h ago</span></li>
+                    <li class="notice-item"><span class="notice-tag fault">Maintenance</span><span class="notice-content"><a href="airline-detail-en.html">Pegasus (PC)</a> API response abnormal</span><span class="notice-time">5h ago</span></li>
+                    <li class="notice-item"><span class="notice-tag balance">Balance</span><span class="notice-content"><a href="airline-detail-en.html">Ryanair (FR)</a> balance below warning threshold</span><span class="notice-time">1h ago</span></li>
+                    <li class="notice-item"><span class="notice-tag recover">Recovered</span><span class="notice-content"><a href="airline-detail-en.html">Scoot (TR)</a> restored, outage lasted 3h</span><span class="notice-time">Yesterday</span></li>
+                    <li class="notice-item"><span class="notice-tag new">New</span><span class="notice-content"><a href="airline-detail-en.html">Bamboo Airways (QH)</a> launched</span><span class="notice-time">3 days ago</span></li>
                 </ul>
             </div>
         </div>
@@ -315,8 +325,8 @@
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value success">98.5%</span></li>
                             <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">97.8%</span></li>
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value success">96.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated">Not Activated</span></span><span class="ranking-value success">95.4%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a><span class="not-activated">Not Activated</span></span><span class="ranking-value success">94.1%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span><span class="ranking-value success">95.4%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value success">94.1%</span></li>
                         </ul>
                         <div class="ranking-pagination">
                             <button class="ranking-page-btn active" onclick="showPage('verifyRate', 1)">1-5</button>
@@ -333,8 +343,8 @@
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value success">97.5%</span></li>
                             <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">96.8%</span></li>
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value success">95.6%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated">Not Activated</span></span><span class="ranking-value success">94.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a><span class="not-activated">Not Activated</span></span><span class="ranking-value success">93.4%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span><span class="ranking-value success">94.8%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value success">93.4%</span></li>
                         </ul>
                         <div class="ranking-pagination">
                             <button class="ranking-page-btn active" onclick="showPage('ticketRate', 1)">1-5</button>
@@ -344,19 +354,37 @@
                     <!-- 航司热门度排名 -->
                     <div class="ranking-section">
                         <div class="ranking-label">
-                            Popularity Ranking Top10 (by orders)
+                            Airline Popularity Top10 (by orders)
                             <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airline Popularity Ranking</div>Popular airlines ranked by order volume.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
                         </div>
                         <ul class="ranking-list" id="popularityList">
-                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value">12,450</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value">8,320</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value">6,180</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated">Not Activated</span></span><span class="ranking-value">5,420</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value">4,850</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span></li>
                         </ul>
                         <div class="ranking-pagination">
                             <button class="ranking-page-btn active" onclick="showPage('popularity', 1)">1-5</button>
                             <button class="ranking-page-btn" onclick="showPage('popularity', 2)">6-10</button>
+                        </div>
+                    </div>
+                    <!-- 航线热门度排名 -->
+                    <div class="ranking-section">
+                        <div class="ranking-label">
+                            Route Popularity Top10 (by orders)
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Route Popularity Ranking</div>Popular routes ranked by order volume.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                        </div>
+                        <ul class="ranking-list" id="routePopularityList">
+                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name">DEL-BOM (Delhi-Mumbai)</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name">LAS-LAX (Las Vegas-Los Angeles)</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name">DEN-PHX (Denver-Phoenix)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name">GRU-CGH (São Paulo-São Paulo)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name">CGK-SUB (Jakarta-Surabaya)</span></li>
+                        </ul>
+                        <div class="ranking-pagination">
+                            <button class="ranking-page-btn active" onclick="showPage('routePopularity', 1)">1-5</button>
+                            <button class="ranking-page-btn" onclick="showPage('routePopularity', 2)">6-10</button>
                         </div>
                     </div>
                 </div>
@@ -366,7 +394,7 @@
             <div class="section">
                 <div class="section-header">
                     <div>
-                        <div class="section-title">Platform Price Volatility Rankings</div>
+                        <div class="section-title">Price Volatility Rankings</div>
                         <div class="section-subtitle">Higher index = more price volatility</div>
                     </div>
                     <div class="time-selector">
@@ -402,7 +430,7 @@
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value success">2.1</span></li>
                             <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">2.8</span></li>
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value success">3.2</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated">Not Activated</span></span><span class="ranking-value success">3.5</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span><span class="ranking-value success">3.5</span></li>
                             <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value success">4.1</span></li>
                         </ul>
                         <div class="ranking-pagination">
@@ -422,6 +450,10 @@
                     <div class="section-subtitle">Based on your API call data</div>
                 </div>
                 <div class="time-selector">
+                    <button class="time-btn">15min</button>
+                    <button class="time-btn">30min</button>
+                    <button class="time-btn">1h</button>
+                    <button class="time-btn">4h</button>
                     <button class="time-btn">Yesterday</button>
                     <button class="time-btn active">Last 7 Days</button>
                 </div>
@@ -429,29 +461,29 @@
             <div class="section-body">
                 <div class="data-overview">
                     <div class="data-item">
-                        <div class="data-item-label">Verify Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Offer Verification Success Rate</div>The percentage of successful valid quotes obtained from verification requests across all airlines.<div class="tooltip-compare">📊 Comparison: Yesterday = vs D-2 | Last 7 Days = vs Previous 7 Days</div><div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-label">Verify Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Offer Verification Success Rate</div>The percentage of successful valid quotes obtained from verification requests across all airlines.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--success-color)">92.3%</div>
-                        <div class="data-item-trend trend-up">↑ 1.2% vs prev</div>
+                        <div class="data-item-trend trend-up">↑ 1.2%</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-item-label">Verify Price Change<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Offer Price Change Rate</div>The percentage of price discrepancies between verification and search.<div class="tooltip-compare">📊 Comparison: Yesterday = vs D-2 | Last 7 Days = vs Previous 7 Days</div><div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-label">Verify Price Change<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Offer Price Change Rate</div>The percentage of price discrepancies between verification and search.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--warning-color)">8.5%</div>
-                        <div class="data-item-trend trend-down">↑ 0.8% vs prev</div>
+                        <div class="data-item-trend trend-down">↑ 0.8%</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-item-label">Booking Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Order Creation Success Rate</div>The percentage of successful order creations across all airlines.<div class="tooltip-compare">📊 Comparison: Yesterday = vs D-2 | Last 7 Days = vs Previous 7 Days</div><div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-label">Booking Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Order Creation Success Rate</div>The percentage of successful order creations across all airlines.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--success-color)">89.7%</div>
-                        <div class="data-item-trend trend-up">↑ 0.5% vs prev</div>
+                        <div class="data-item-trend trend-up">↑ 0.5%</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-item-label">Booking Price Change<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Order Price Change Rate</div>The percentage of price discrepancies between booking and verification.<div class="tooltip-compare">📊 Comparison: Yesterday = vs D-2 | Last 7 Days = vs Previous 7 Days</div><div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-label">Booking Price Change<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Order Price Change Rate</div>The percentage of price discrepancies between booking and verification.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--warning-color)">5.2%</div>
-                        <div class="data-item-trend trend-down">↑ 0.3% vs prev</div>
+                        <div class="data-item-trend trend-down">↑ 0.3%</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-item-label">Ticketing Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Ticketing Success Rate</div>The percentage of successful ticketing across all airlines.<div class="tooltip-compare">📊 Comparison: Yesterday = vs D-2 | Last 7 Days = vs Previous 7 Days</div><div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-label">Ticketing Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Ticketing Success Rate</div>The percentage of successful ticketing across all airlines.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--success-color)">95.1%</div>
-                        <div class="data-item-trend trend-up">↑ 0.2% vs prev</div>
+                        <div class="data-item-trend trend-up">↑ 0.2%</div>
                     </div>
                 </div>
             </div>
@@ -466,14 +498,31 @@
                         <div class="section-title">My Airlines - Success Rates</div>
                         <div class="section-subtitle">Top/Bottom performers</div>
                     </div>
-                    <div class="time-selector">
-                        <button class="time-btn">Yesterday</button>
-                        <button class="time-btn active">Last 7 Days</button>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <select style="padding: 4px 8px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-white);">
+                            <option value="bottom5">Bottom5</option>
+                            <option value="top5">Top5</option>
+                        </select>
+                        <div class="time-selector">
+                            <button class="time-btn">15min</button>
+                            <button class="time-btn">30min</button>
+                            <button class="time-btn">1h</button>
+                            <button class="time-btn">4h</button>
+                            <button class="time-btn">Yesterday</button>
+                            <button class="time-btn active">Last 7 Days</button>
+                        </div>
                     </div>
                 </div>
                 <div class="section-body">
                     <div class="ranking-section">
-                        <div class="ranking-label">Verify Success Rate Bottom5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airlines by Offer Verification Success Rate (Bottom)</div>Airlines with the lowest verification success rates.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="ranking-label">
+                            Verify Success Rate
+                            <select class="filter-select" style="margin-left: 8px; padding: 2px 8px; font-size: 12px;">
+                                <option value="top5">Top 5</option>
+                                <option value="bottom5" selected>Bottom 5</option>
+                            </select>
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airlines by Offer Verification Success Rate</div>Airlines with the highest/lowest verification success rates.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                        </div>
                         <ul class="ranking-list">
                             <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-en.html">Vueling (VY)</a></span><span class="ranking-value error">72.3%</span></li>
                             <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-en.html">Pegasus (PC)</a></span><span class="ranking-value error">78.5%</span></li>
@@ -483,7 +532,14 @@
                         </ul>
                     </div>
                     <div class="ranking-section">
-                        <div class="ranking-label">Booking Success Rate Bottom5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airlines by Order Creation Success Rate (Bottom)</div>Airlines with the lowest order creation success rates.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="ranking-label">
+                            Booking Success Rate
+                            <select class="filter-select" style="margin-left: 8px; padding: 2px 8px; font-size: 12px;">
+                                <option value="top5">Top 5</option>
+                                <option value="bottom5" selected>Bottom 5</option>
+                            </select>
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airlines by Order Creation Success Rate</div>Airlines with the highest/lowest order creation success rates.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                        </div>
                         <ul class="ranking-list">
                             <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-en.html">Vueling (VY)</a></span><span class="ranking-value error">70.8%</span></li>
                             <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-en.html">Pegasus (PC)</a></span><span class="ranking-value error">75.2%</span></li>
@@ -493,7 +549,14 @@
                         </ul>
                     </div>
                     <div class="ranking-section">
-                        <div class="ranking-label">Ticketing Success Rate Bottom5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airlines by Ticketing Success Rate (Bottom)</div>Airlines with the lowest ticketing success rates.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="ranking-label">
+                            Ticketing Success Rate
+                            <select class="filter-select" style="margin-left: 8px; padding: 2px 8px; font-size: 12px;">
+                                <option value="top5">Top 5</option>
+                                <option value="bottom5" selected>Bottom 5</option>
+                            </select>
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airlines by Ticketing Success Rate</div>Airlines with the highest/lowest ticketing success rates.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                        </div>
                         <ul class="ranking-list">
                             <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-en.html">Pegasus (PC)</a></span><span class="ranking-value error">68.9%</span></li>
                             <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-en.html">Vueling (VY)</a></span><span class="ranking-value error">75.2%</span></li>
@@ -513,6 +576,10 @@
                         <div class="section-subtitle">Higher = more volatility</div>
                     </div>
                     <div class="time-selector">
+                        <button class="time-btn">15min</button>
+                        <button class="time-btn">30min</button>
+                        <button class="time-btn">1h</button>
+                        <button class="time-btn">4h</button>
                         <button class="time-btn">Yesterday</button>
                         <button class="time-btn active">Last 7 Days</button>
                     </div>
@@ -539,6 +606,10 @@
                         <div class="section-subtitle">Higher = more volatility</div>
                     </div>
                     <div class="time-selector">
+                        <button class="time-btn">15min</button>
+                        <button class="time-btn">30min</button>
+                        <button class="time-btn">1h</button>
+                        <button class="time-btn">4h</button>
                         <button class="time-btn">Yesterday</button>
                         <button class="time-btn active">Last 7 Days</button>
                     </div>
@@ -570,7 +641,7 @@
                         <tr><td><a href="airline-detail-en.html">IndiGo (6E)</a></td><td><span class="status-badge online">Online</span></td></tr>
                         <tr><td><a href="airline-detail-en.html">Spirit Airlines (NK)</a></td><td><span class="status-badge online">Online</span></td></tr>
                         <tr><td><a href="airline-detail-en.html">Frontier Airlines (F9)</a></td><td><span class="status-badge online">Online</span></td></tr>
-                        <tr><td><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated" style="margin-left:8px;">Not Activated</span></td><td><span class="status-badge online">Online</span></td></tr>
+                        <tr><td><a href="airline-detail-en.html">Azul Airlines (AD)</a></td><td><span class="status-badge online">Online</span></td></tr>
                         <tr><td><a href="airline-detail-en.html">Lion Airlines (JT)</a></td><td><span class="status-badge online">Online</span></td></tr>
                     </tbody>
                 </table>
@@ -612,21 +683,21 @@
 
     <div class="modal-overlay" id="announcementModal">
         <div class="modal" style="width: 800px;">
-            <div class="modal-header"><span class="modal-title">All Announcements (Last 30 Days)</span><button class="modal-close" onclick="hideModal('announcementModal')">×</button></div>
+            <div class="modal-header"><span class="modal-title">All Platform Announcements (Last 30 Days)</span><button class="modal-close" onclick="hideModal('announcementModal')">×</button></div>
             <div class="modal-body">
                 <table class="simple-table">
-                    <thead><tr><th style="width:100px;">Type</th><th>Content</th><th style="width:180px;">Time (UTC)</th></tr></thead>
+                    <thead><tr><th style="width:100px;">Type</th><th>Content</th><th style="width:180px;">Time</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="notice-tag maintenance">Maintenance</span></td><td><a href="airline-detail-en.html">Vueling (VY)</a> suspended due to data quality issues</td><td>2025-12-11 12:30:45</td></tr>
-                        <tr><td><span class="notice-tag maintenance">Maintenance</span></td><td><a href="airline-detail-en.html">Pegasus (PC)</a> API response abnormal</td><td>2025-12-11 09:15:22</td></tr>
-                        <tr><td><span class="notice-tag balance">Balance</span></td><td><a href="airline-detail-en.html">Ryanair (FR)</a> balance below warning threshold</td><td>2025-12-11 13:05:18</td></tr>
-                        <tr><td><span class="notice-tag recover">Recovered</span></td><td><a href="airline-detail-en.html">Scoot (TR)</a> restored, maintenance lasted 3h</td><td>2025-12-10 18:42:33</td></tr>
-                        <tr><td><span class="notice-tag new">New</span></td><td><a href="airline-detail-en.html">Bamboo Airways (QH)</a> launched</td><td>2025-12-08 00:00:00</td></tr>
-                        <tr><td><span class="notice-tag maintenance">Maintenance</span></td><td><a href="airline-detail-en.html">AirAsia (AK)</a> manual closure for system upgrade</td><td>2025-12-07 22:15:00</td></tr>
-                        <tr><td><span class="notice-tag recover">Recovered</span></td><td><a href="airline-detail-en.html">AirAsia (AK)</a> restored after system upgrade</td><td>2025-12-08 06:30:00</td></tr>
-                        <tr><td><span class="notice-tag balance">Balance</span></td><td><a href="airline-detail-en.html">Wizz Air (W6)</a> balance below warning threshold</td><td>2025-12-05 10:22:15</td></tr>
-                        <tr><td><span class="notice-tag new">New</span></td><td><a href="airline-detail-en.html">Sky Express (GQ)</a> launched</td><td>2025-11-28 00:00:00</td></tr>
-                        <tr><td><span class="notice-tag maintenance">Maintenance</span></td><td><a href="airline-detail-en.html">easyJet (U2)</a> API timeout issues</td><td>2025-11-25 14:20:33</td></tr>
+                        <tr><td><span class="notice-tag fault">Maintenance</span></td><td><a href="airline-detail-en.html">Vueling (VY)</a> suspended due to data quality issues</td><td>2h ago</td></tr>
+                        <tr><td><span class="notice-tag fault">Maintenance</span></td><td><a href="airline-detail-en.html">Pegasus (PC)</a> API response abnormal</td><td>5h ago</td></tbody>tr>
+                        <tr><td><span class="notice-tag balance">Balance</span></td><td><a href="airline-detail-en.html">Ryanair (FR)</a> balance below warning threshold</td><td>1h ago</td></tr>
+                        <tr><td><span class="notice-tag recover">Recovered</span></td><td><a href="airline-detail-en.html">Scoot (TR)</a> restored, outage lasted 3h</td><td>Yesterday</td></tr>
+                        <tr><td><span class="notice-tag new">New</span></td><td><a href="airline-detail-en.html">Bamboo Airways (QH)</a> launched</td><td>3 days ago</td></tr>
+                        <tr><td><span class="notice-tag fault">Maintenance</span></td><td><a href="airline-detail-en.html">AirAsia (AK)</a> manual closure for system upgrade</td><td>4 days ago</td></tr>
+                        <tr><td><span class="notice-tag recover">Recovered</span></td><td><a href="airline-detail-en.html">AirAsia (AK)</a> restored after system upgrade</td><td>3 days ago</td></tr>
+                        <tr><td><span class="notice-tag balance">Balance</span></td><td><a href="airline-detail-en.html">Wizz Air (W6)</a> balance below warning threshold</td><td>6 days ago</td></tr>
+                        <tr><td><span class="notice-tag new">New</span></td><td><a href="airline-detail-en.html">Sky Express (GQ)</a> launched</td><td>13 days ago</td></tr>
+                        <tr><td><span class="notice-tag fault">Maintenance</span></td><td><a href="airline-detail-en.html">easyJet (U2)</a> API timeout issues</td><td>16 days ago</td></tr>
                     </tbody>
                 </table>
             </div>
