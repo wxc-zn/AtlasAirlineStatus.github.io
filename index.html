@@ -245,8 +245,8 @@
         <div class="stats-row">
             <div class="stat-card online" onclick="showModal('onlineModal')">
                 <div class="stat-label">
-                    Operational Airlines
-                    <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Operational Airlines</div>The number of airlines currently operational. These airlines are operational and available for search, verification and ticketing operations.<div class="tooltip-refresh">🔄 Refresh: Every 5 minutes, manual refresh supported</div></div></span>
+                    Active Airlines
+                    <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Active Airlines</div>The number of airlines currently operational. These airlines are operational and available for search, verification and ticketing operations.<div class="tooltip-refresh">🔄 Refresh: Every 5 minutes, manual refresh supported</div></div></span>
                 </div>
                 <div class="stat-value">47</div>
                 <div class="stat-sub">Click for details →</div>
@@ -291,6 +291,9 @@
                 </div>
             </div>
             <div class="section-body">
+                <div style="font-size:12px;color:var(--text-muted);background:#fafafa;border-radius:4px;padding:8px 12px;margin-bottom:12px;">
+                    ℹ️ Announcements apply to all airlines on the Atlas platform and are visible to all customers.
+                </div>
                 <ul class="notice-list">
                     <li class="notice-item"><span class="notice-tag fault">Maintenance</span><span class="notice-content"><a href="airline-detail-en.html">Vueling (VY)</a> suspended due to data quality issues</span><span class="notice-time">2h ago</span></li>
                     <li class="notice-item"><span class="notice-tag fault">Maintenance</span><span class="notice-content"><a href="airline-detail-en.html">Pegasus (PC)</a> API response instability detected</span><span class="notice-time">5h ago</span></li>
@@ -306,7 +309,7 @@
             <div class="section-header">
                 <div>
                     <div class="section-title">Platform Airline Rankings</div>
-                    <div class="section-subtitle">Overall airline supply quality on Atlas</div>
+                    <div class="section-subtitle">Overall airline supply quality on Atlas <span style="background:#fff7e6;color:#d48806;padding:1px 8px;border-radius:3px;font-size:11px;margin-left:8px;border:1px solid #ffe58f;">Platform-wide · Not your personal data</span></div>
                 </div>
                 <div class="time-selector">
                     <button class="time-btn">Yesterday</button>
@@ -315,11 +318,11 @@
             </div>
             <div class="section-body">
                 <div class="grid-3">
-                    <!-- 验价成功率 Top10 -->
+                    <!-- Offer Verification Success Rate Top 10 -->
                     <div class="ranking-section">
                         <div class="ranking-label">
                             Offer Verification Success Rate Top 10
-                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Offer Verification Success Rate Top 10</div>The 10 airlines with the highest offer verification success rate on Atlas.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Offer Verification Success Rate Top 10</div>The 10 airlines with the highest offer verification success rate on Atlas. Includes both standard Verify API and GetOffer API calls.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
                         </div>
                         <ul class="ranking-list" id="verifyRateList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value success">98.5%</span></li>
@@ -333,11 +336,11 @@
                             <button class="ranking-page-btn" onclick="showPage('verifyRate', 2)">6-10</button>
                         </div>
                     </div>
-                    <!-- 航司热门度排名 -->
+                    <!-- Airline Popularity Top 30 -->
                     <div class="ranking-section">
                         <div class="ranking-label">
-                            Airline Popularity Top 10 (by orders)
-                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airline Popularity Top 10</div>Popular airlines ranked by order volume on Atlas.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                            Airline Popularity Top 30 (by orders)
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Airline Popularity Top 30</div>Popular airlines ranked by order volume on Atlas.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
                         </div>
                         <ul class="ranking-list" id="popularityList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span></li>
@@ -345,23 +348,32 @@
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span></li>
                             <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span></li>
                             <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">6</span><span class="ranking-name"><a href="airline-detail-en.html">Scoot (TR)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">7</span><span class="ranking-name"><a href="airline-detail-en.html">Cebu Pacific (5J)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">8</span><span class="ranking-name"><a href="airline-detail-en.html">VietJet Air (VJ)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">9</span><span class="ranking-name"><a href="airline-detail-en.html">AirAsia X (D7)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">10</span><span class="ranking-name"><a href="airline-detail-en.html">Jetstar (JQ)</a></span></li>
                         </ul>
                         <div class="ranking-pagination">
-                            <button class="ranking-page-btn active" onclick="showPage('popularity', 1)">1-5</button>
-                            <button class="ranking-page-btn" onclick="showPage('popularity', 2)">6-10</button>
+                            <button class="ranking-page-btn active" onclick="showPage('popularity', 1)">1-10</button>
+                            <button class="ranking-page-btn" onclick="showPage('popularity', 2)">11-20</button>
+                            <button class="ranking-page-btn" onclick="showPage('popularity', 3)">21-30</button>
                         </div>
                     </div>
-                    <!-- 航线热门度排名 -->
+                    <!-- Route Popularity Top 10 -->
                     <div class="ranking-section">
                         <div class="ranking-label">
                             Route Popularity Top 10 (by orders)
                             <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Route Popularity Top 10</div>Popular routes ranked by order volume.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
                         </div>
+                        <div style="text-align:right;margin-bottom:6px;">
+                            <button onclick="downloadRouteData()" style="padding:3px 10px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:11px;cursor:pointer;">⬇ Download Top 1000</button>
+                        </div>
                         <ul class="ranking-list" id="routePopularityList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name">DEL-BOM (Delhi-Mumbai)</span></li>
                             <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name">LAS-LAX (Las Vegas-Los Angeles)</span></li>
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name">DEN-PHX (Denver-Phoenix)</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name">GRU-CGH (São Paulo-São Paulo)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name">GRU-CGH (São Paulo Guarulhos→Congonhas)</span></li>
                             <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name">CGK-SUB (Jakarta-Surabaya)</span></li>
                         </ul>
                         <div class="ranking-pagination">
@@ -378,7 +390,7 @@
             <div class="section-header">
                 <div>
                     <div class="section-title">My Data Quality Overview</div>
-                    <div class="section-subtitle">Based on your API call data</div>
+                    <div class="section-subtitle">Based on your API call data · Verify metrics include GetOffer calls</div>
                 </div>
                 <div class="time-selector">
                     <button class="time-btn">1h</button>
@@ -395,7 +407,7 @@
                         <div class="data-item-trend trend-up">↑ 0.8%</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-item-label">Verify Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Offer Verification Success Rate</div>The percentage of successful valid quotes obtained from verification requests across all airlines.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-label">Verify Success Rate<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Offer Verification Success Rate</div>The percentage of successful verification requests across all airlines. Calculation includes both standard Verify API and GetOffer API calls: (Verify success + GetOffer success) / Total verification requests × 100%<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--success-color)">92.3%</div>
                         <div class="data-item-trend trend-up">↑ 1.2%</div>
                     </div>
@@ -413,6 +425,41 @@
                         <div class="data-item-label">Booking Price Change<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Order Price Change Rate</div>The percentage of price discrepancies between booking and verification.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
                         <div class="data-item-value" style="color: var(--warning-color)">5.2%</div>
                         <div class="data-item-trend trend-down">↑ 0.3%</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-item-label">Booking Count<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">My Overall Booking Count</div>Total booking orders across all airlines in the selected period.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></div>
+                        <div class="data-item-value">68,540</div>
+                        <div class="data-item-trend trend-up">↑ 5.2%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Airlines - Top 10 by Booking Count -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">My Airlines - Top 10 by Booking Count</div>
+                    <div class="section-subtitle">Your most active airlines by order volume</div>
+                </div>
+                <div class="time-selector">
+                    <button class="time-btn">Yesterday</button>
+                    <button class="time-btn active">Last 7 Days</button>
+                    <button class="time-btn">Last 30 Days</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="ranking-section">
+                    <ul class="ranking-list" id="bookingCountList">
+                        <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value">12,450</span></li>
+                        <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value">9,820</span></li>
+                        <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value">8,310</span></li>
+                        <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value">7,640</span></li>
+                        <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span><span class="ranking-value">6,920</span></li>
+                    </ul>
+                    <div class="ranking-pagination">
+                        <button class="ranking-page-btn active" onclick="showPage('bookingCount', 1)">1-5</button>
+                        <button class="ranking-page-btn" onclick="showPage('bookingCount', 2)">6-10</button>
                     </div>
                 </div>
             </div>
@@ -539,16 +586,19 @@
     <!-- Modals -->
     <div class="modal-overlay" id="onlineModal">
         <div class="modal">
-            <div class="modal-header"><span class="modal-title">Operational Airlines (47)</span><button class="modal-close" onclick="hideModal('onlineModal')">×</button></div>
+            <div class="modal-header"><span class="modal-title">Active Airlines (47)</span><button class="modal-close" onclick="hideModal('onlineModal')">×</button></div>
             <div class="modal-body">
+                <div style="margin-bottom:12px;">
+                    <input type="text" placeholder="Search by name or code..." style="width:100%;padding:6px 10px;border:1px solid var(--border-color);border-radius:4px;font-size:13px;" oninput="filterModalList(this)">
+                </div>
                 <table class="simple-table">
                     <thead><tr><th>Airline Name</th><th>Status</th></tr></thead>
                     <tbody>
-                        <tr><td><a href="airline-detail-en.html">IndiGo (6E)</a></td><td><span class="status-badge online">Online</span></td></tr>
-                        <tr><td><a href="airline-detail-en.html">Spirit Airlines (NK)</a></td><td><span class="status-badge online">Online</span></td></tr>
-                        <tr><td><a href="airline-detail-en.html">Frontier Airlines (F9)</a></td><td><span class="status-badge online">Online</span></td></tr>
                         <tr><td><a href="airline-detail-en.html">Azul Airlines (AD)</a></td><td><span class="status-badge online">Online</span></td></tr>
+                        <tr><td><a href="airline-detail-en.html">Frontier Airlines (F9)</a></td><td><span class="status-badge online">Online</span></td></tr>
+                        <tr><td><a href="airline-detail-en.html">IndiGo (6E)</a></td><td><span class="status-badge online">Online</span></td></tr>
                         <tr><td><a href="airline-detail-en.html">Lion Airlines (JT)</a></td><td><span class="status-badge online">Online</span></td></tr>
+                        <tr><td><a href="airline-detail-en.html">Spirit Airlines (NK)</a></td><td><span class="status-badge online">Online</span></td></tr>
                     </tbody>
                 </table>
                 <div style="text-align:center;padding:16px;color:var(--text-muted);font-size:13px;">... Showing 5 of 47</div>
@@ -560,6 +610,12 @@
         <div class="modal">
             <div class="modal-header"><span class="modal-title">Under Maintenance Airlines (3)</span><button class="modal-close" onclick="hideModal('faultModal')">×</button></div>
             <div class="modal-body">
+                <div style="margin-bottom:12px;">
+                    <input type="text" placeholder="Search by name or code..." style="width:100%;padding:6px 10px;border:1px solid var(--border-color);border-radius:4px;font-size:13px;" oninput="filterModalList(this)">
+                </div>
+                <div style="font-size:12px;color:#d48806;background:#fffbe6;border:1px solid #ffe58f;border-radius:4px;padding:8px 12px;margin-bottom:12px;">
+                    ⚠️ Maintenance status is based on search capability. GetOffer clients may still be able to complete offer verification on these airlines.
+                </div>
                 <table class="simple-table">
                     <thead><tr><th>Airline Name</th><th>Reason</th><th>Start Time</th></tr></thead>
                     <tbody>
@@ -576,6 +632,9 @@
         <div class="modal">
             <div class="modal-header"><span class="modal-title">Low Balance Alerts (2)</span><button class="modal-close" onclick="hideModal('balanceModal')">×</button></div>
             <div class="modal-body">
+                <div style="margin-bottom:12px;">
+                    <input type="text" placeholder="Search by name or code..." style="width:100%;padding:6px 10px;border:1px solid var(--border-color);border-radius:4px;font-size:13px;" oninput="filterModalList(this)">
+                </div>
                 <table class="simple-table">
                     <thead><tr><th>Airline Name</th><th>Status</th></tr></thead>
                     <tbody>
@@ -616,7 +675,7 @@
         document.querySelectorAll('.modal-overlay').forEach(o => { o.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); }); });
         document.querySelectorAll('.time-selector').forEach(s => { s.querySelectorAll('.time-btn').forEach(b => { b.addEventListener('click', function() { s.querySelectorAll('.time-btn').forEach(x => x.classList.remove('active')); this.classList.add('active'); }); }); });
         
-        // Pagination data for Top10 rankings
+        // Pagination data for rankings
         const rankingData = {
             verifyRate: {
                 1: [
@@ -640,14 +699,68 @@
                     { rank: 2, name: 'Spirit Airlines (NK)', value: '', class: '' },
                     { rank: 3, name: 'Frontier (F9)', value: '', class: '' },
                     { rank: 4, name: 'Azul Airlines (AD)', value: '', class: '' },
-                    { rank: 5, name: 'Lion Airlines (JT)', value: '', class: '' }
-                ],
-                2: [
+                    { rank: 5, name: 'Lion Airlines (JT)', value: '', class: '' },
                     { rank: 6, name: 'Scoot (TR)', value: '', class: '' },
                     { rank: 7, name: 'Cebu Pacific (5J)', value: '', class: '' },
                     { rank: 8, name: 'VietJet Air (VJ)', value: '', class: '' },
                     { rank: 9, name: 'AirAsia X (D7)', value: '', class: '' },
                     { rank: 10, name: 'Jetstar (JQ)', value: '', class: '' }
+                ],
+                2: [
+                    { rank: 11, name: 'Ryanair (FR)', value: '', class: '' },
+                    { rank: 12, name: 'easyJet (U2)', value: '', class: '' },
+                    { rank: 13, name: 'Wizz Air (W6)', value: '', class: '' },
+                    { rank: 14, name: 'Vueling (VY)', value: '', class: '' },
+                    { rank: 15, name: 'Pegasus (PC)', value: '', class: '' },
+                    { rank: 16, name: 'Norwegian (DY)', value: '', class: '' },
+                    { rank: 17, name: 'Transavia (HV)', value: '', class: '' },
+                    { rank: 18, name: 'Eurowings (EW)', value: '', class: '' },
+                    { rank: 19, name: 'Volotea (V7)', value: '', class: '' },
+                    { rank: 20, name: 'Air Arabia (G9)', value: '', class: '' }
+                ],
+                3: [
+                    { rank: 21, name: 'Air India (AI)', value: '', class: '' },
+                    { rank: 22, name: 'SpiceJet (SG)', value: '', class: '' },
+                    { rank: 23, name: 'Go First (G8)', value: '', class: '' },
+                    { rank: 24, name: 'Batik Air (ID)', value: '', class: '' },
+                    { rank: 25, name: 'Nok Air (DD)', value: '', class: '' },
+                    { rank: 26, name: 'Thai Lion (SL)', value: '', class: '' },
+                    { rank: 27, name: 'Malindo Air (OD)', value: '', class: '' },
+                    { rank: 28, name: 'Philippines AirAsia (Z2)', value: '', class: '' },
+                    { rank: 29, name: 'Bamboo Airways (QH)', value: '', class: '' },
+                    { rank: 30, name: 'Sky Express (GQ)', value: '', class: '' }
+                ]
+            },
+            routePopularity: {
+                1: [
+                    { rank: 1, name: 'DEL-BOM (Delhi-Mumbai)', value: '', class: '' },
+                    { rank: 2, name: 'LAS-LAX (Las Vegas-Los Angeles)', value: '', class: '' },
+                    { rank: 3, name: 'DEN-PHX (Denver-Phoenix)', value: '', class: '' },
+                    { rank: 4, name: 'GRU-CGH (São Paulo Guarulhos→Congonhas)', value: '', class: '' },
+                    { rank: 5, name: 'CGK-SUB (Jakarta-Surabaya)', value: '', class: '' }
+                ],
+                2: [
+                    { rank: 6, name: 'BOM-DEL (Mumbai-Delhi)', value: '', class: '' },
+                    { rank: 7, name: 'MAD-BCN (Madrid-Barcelona)', value: '', class: '' },
+                    { rank: 8, name: 'SYD-MEL (Sydney-Melbourne)', value: '', class: '' },
+                    { rank: 9, name: 'KUL-SIN (Kuala Lumpur-Singapore)', value: '', class: '' },
+                    { rank: 10, name: 'BKK-DMK (Bangkok Suvarnabhumi→Don Mueang)', value: '', class: '' }
+                ]
+            },
+            bookingCount: {
+                1: [
+                    { rank: 1, name: 'IndiGo (6E)', value: '12,450', class: '' },
+                    { rank: 2, name: 'Spirit Airlines (NK)', value: '9,820', class: '' },
+                    { rank: 3, name: 'Frontier (F9)', value: '8,310', class: '' },
+                    { rank: 4, name: 'Lion Airlines (JT)', value: '7,640', class: '' },
+                    { rank: 5, name: 'Azul Airlines (AD)', value: '6,920', class: '' }
+                ],
+                2: [
+                    { rank: 6, name: 'Scoot (TR)', value: '5,480', class: '' },
+                    { rank: 7, name: 'easyJet (U2)', value: '4,870', class: '' },
+                    { rank: 8, name: 'Ryanair (FR)', value: '4,120', class: '' },
+                    { rank: 9, name: 'Cebu Pacific (5J)', value: '3,650', class: '' },
+                    { rank: 10, name: 'VietJet Air (VJ)', value: '3,210', class: '' }
                 ]
             },
             highVol: {
@@ -683,11 +796,13 @@
                 ]
             }
         };
-        
+
         function showPage(listId, page) {
             const listMap = {
                 verifyRate: 'verifyRateList',
                 popularity: 'popularityList',
+                routePopularity: 'routePopularityList',
+                bookingCount: 'bookingCountList',
                 highVol: 'highVolatilityList',
                 lowVol: 'lowVolatilityList'
             };
@@ -715,6 +830,27 @@
             pagination.querySelectorAll('.ranking-page-btn').forEach((btn, idx) => {
                 btn.classList.toggle('active', idx + 1 === page);
             });
+        }
+        function filterModalList(input) {
+            const val = input.value.toLowerCase();
+            const modal = input.closest('.modal-body');
+            modal.querySelectorAll('tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(val) ? '' : 'none';
+            });
+        }
+        function sortModalList(btn) {
+            const modal = btn.closest('.modal-body');
+            const tbody = modal.querySelector('tbody');
+            if (!tbody) return;
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim()));
+            rows.forEach(r => tbody.appendChild(r));
+        }
+        function downloadRouteData() {
+            const csv = 'city_pair,airline_code\nDEL-BOM,6E\nLAS-LAX,NK\nDEN-PHX,F9\nGRU-CGH,AD\nCGK-SUB,JT\n...(top 1000)';
+            const blob = new Blob([csv], {type:'text/csv'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = 'route_popularity_top1000.csv'; a.click();
         }
     </script>
 </body>

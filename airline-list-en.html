@@ -88,6 +88,38 @@
         .status-badge.online { background: #f6ffed; color: #52c41a; }
         .status-badge.maintenance { background: #fff2f0; color: #ff4d4f; }
         .not-activated { display: inline-block; padding: 1px 6px; background: #f0f0f0; color: var(--text-muted); border-radius: 3px; font-size: 11px; margin-left: 6px; }
+        .offline-badge {
+            display: inline-block;
+            background: #ff4d4f;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 5px;
+            border-radius: 2px;
+            margin-left: 6px;
+            vertical-align: middle;
+            position: relative;
+            cursor: default;
+        }
+        .offline-badge::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            font-size: 12px;
+            font-weight: normal;
+            padding: 6px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 100;
+        }
+        .offline-badge:hover::after { visibility: visible; opacity: 1; }
         .status-badge.balance { background: #fffbe6; color: #d48806; }
         .rate-value { font-weight: 500; }
         .rate-value.success { color: var(--success-color); }
@@ -199,7 +231,7 @@
             </label>
             <button class="filter-btn">Search</button>
             <button class="filter-btn secondary">Reset</button>
-            
+
             <div class="time-selector">
                 <span class="filter-label" style="margin-right: 8px;">Time Period</span>
                 <button class="time-btn">Yesterday</button>
@@ -215,6 +247,7 @@
                     <tr>
                         <th style="width: 50px;">Follow</th>
                         <th>Airline Name</th>
+                        <th class="sortable"><span class="th-label">Booking Vol. ↓<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Booking Volume</div>Total booking orders for this airline in the selected period. Sort to find your most active airlines.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></span></th>
                         <th>
                             <span class="th-label">Status
                                 <span class="info-icon">ⓘ
@@ -276,6 +309,7 @@
                     <tr>
                         <td><button class="star-btn active" onclick="toggleStar(this)">★</button></td>
                         <td><a href="airline-detail-en.html">IndiGo (6E)</a></td>
+                        <td><span class="rate-value">2,341</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value success">96.8%</span></td>
                         <td><span class="rate-value success">4.2%</span></td>
@@ -285,6 +319,7 @@
                     <tr>
                         <td><button class="star-btn active" onclick="toggleStar(this)">★</button></td>
                         <td><a href="airline-detail-en.html">Spirit Airlines (NK)</a></td>
+                        <td><span class="rate-value">1,876</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value success">95.2%</span></td>
                         <td><span class="rate-value success">5.8%</span></td>
@@ -294,6 +329,7 @@
                     <tr>
                         <td><button class="star-btn active" onclick="toggleStar(this)">★</button></td>
                         <td><a href="airline-detail-en.html">Ryanair (FR)</a></td>
+                        <td><span class="rate-value">1,205</span></td>
                         <td><span class="status-badge balance">Low Balance</span></td>
                         <td><span class="rate-value warning">84.6%</span></td>
                         <td><span class="rate-value error">18.5%</span></td>
@@ -313,6 +349,7 @@
                     <tr>
                         <th style="width: 50px;">Follow</th>
                         <th>Airline Name</th>
+                        <th class="sortable"><span class="th-label">Booking Vol. ↓<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Booking Volume</div>Total booking orders for this airline in the selected period. Sort to find your most active airlines.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></span></th>
                         <th>
                             <span class="th-label">Status
                                 <span class="info-icon">ⓘ
@@ -374,6 +411,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Frontier Airlines (F9)</a></td>
+                        <td><span class="rate-value">983</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value success">94.1%</span></td>
                         <td><span class="rate-value success">6.2%</span></td>
@@ -382,7 +420,8 @@
                     </tr>
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                        <td><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a><span class="not-activated">Not Activated</span></td>
+                        <td><a href="airline-detail-not-activated-en.html">Azul Airlines (AD)</a></td>
+                        <td><span class="rate-value">756</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value success">93.5%</span></td>
                         <td><span class="rate-value success">5.4%</span></td>
@@ -391,7 +430,8 @@
                     </tr>
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                        <td><a href="airline-detail-en.html">Lion Airlines (JT)</a><span class="not-activated">Not Activated</span></td>
+                        <td><a href="airline-detail-en.html">Lion Airlines (JT)</a><span class="offline-badge" data-tooltip="This airline is not currently available for your search">Offline</span></td>
+                        <td><span class="rate-value">654</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value success">92.8%</span></td>
                         <td><span class="rate-value success">7.1%</span></td>
@@ -401,6 +441,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Scoot (TR)</a></td>
+                        <td><span class="rate-value">521</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value success">91.2%</span></td>
                         <td><span class="rate-value warning">8.5%</span></td>
@@ -410,6 +451,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">easyJet (U2)</a></td>
+                        <td><span class="rate-value">487</span></td>
                         <td><span class="status-badge online">Operational</span></td>
                         <td><span class="rate-value warning">85.2%</span></td>
                         <td><span class="rate-value warning">12.8%</span></td>
@@ -419,6 +461,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Wizz Air (W6)</a></td>
+                        <td><span class="rate-value">412</span></td>
                         <td><span class="status-badge balance">Low Balance</span></td>
                         <td><span class="rate-value warning">82.1%</span></td>
                         <td><span class="rate-value error">15.2%</span></td>
@@ -428,6 +471,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Pegasus (PC)</a></td>
+                        <td><span class="rate-value">389</span></td>
                         <td><span class="status-badge maintenance">Under Maintenance</span></td>
                         <td><span class="rate-value error">78.5%</span></td>
                         <td><span class="rate-value warning">9.7%</span></td>
@@ -437,6 +481,7 @@
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                         <td><a href="airline-detail-en.html">Vueling (VY)</a></td>
+                        <td><span class="rate-value">342</span></td>
                         <td><span class="status-badge maintenance">Under Maintenance</span></td>
                         <td><span class="rate-value error">72.3%</span></td>
                         <td><span class="rate-value warning">11.3%</span></td>
@@ -445,7 +490,8 @@
                     </tr>
                     <tr>
                         <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                        <td><a href="airline-detail-en.html">AirAsia (AK)</a></td>
+                        <td><a href="airline-detail-en.html">AirAsia (AK)</a><span class="offline-badge" data-tooltip="This airline is not currently available for your search">Offline</span></td>
+                        <td>-</td>
                         <td><span class="status-badge maintenance">Under Maintenance</span></td>
                         <td><span class="rate-value">-</span></td>
                         <td><span class="rate-value">-</span></td>
@@ -506,6 +552,42 @@
                 document.querySelector('.section-header').style.display = 'flex';
             }
         });
+        function sortAZ() {
+            const tbody = document.querySelector('.table-container .data-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const nameA = a.cells[1].textContent.trim();
+                const nameB = b.cells[1].textContent.trim();
+                return nameA.localeCompare(nameB);
+            });
+            rows.forEach(row => tbody.appendChild(row));
+        }
+        // Fix Item 9: Pagination items-per-page
+        (function() {
+            const perPageSelect = document.querySelector('.pagination-info select');
+            if (!perPageSelect) return;
+            perPageSelect.addEventListener('change', function() {
+                const perPage = parseInt(this.value);
+                const allRows = Array.from(document.querySelectorAll('.table-container .data-table tbody tr'));
+                allRows.forEach((row, idx) => {
+                    row.style.display = idx < perPage ? '' : 'none';
+                });
+                const total = allRows.length;
+                document.querySelector('.pagination-info').childNodes[0].textContent = `Total ${total} records, `;
+            });
+        })();
+        // Default sort by booking volume (Item 6)
+        (function() {
+            const tbody = document.querySelector('.table-container .data-table tbody');
+            if (!tbody) return;
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const aVal = parseInt((a.cells[2].textContent || '0').replace(/,/g, '')) || 0;
+                const bVal = parseInt((b.cells[2].textContent || '0').replace(/,/g, '')) || 0;
+                return bVal - aVal;
+            });
+            rows.forEach(r => tbody.appendChild(r));
+        })();
     </script>
 </body>
 </html>

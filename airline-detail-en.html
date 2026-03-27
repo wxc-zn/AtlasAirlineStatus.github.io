@@ -279,7 +279,7 @@
                             <span class="info-icon">ⓘ
                                 <div class="tooltip">
                                     <div class="tooltip-title">Platform Offer Verification Success Rate</div>
-                                    This airline's overall verification success rate on the Atlas platform.
+                                    This airline's overall verification success rate on the Atlas platform. Includes both standard Verify API and GetOffer API calls.
                                     <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
                                 </div>
                             </span>
@@ -391,15 +391,15 @@
                 </div>
             </div>
             <div class="section-body">
-                <div class="subsection-label">Booking Flow Success Rates</div>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+                <div class="subsection-label">Booking Flow Metrics</div>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px;">
                     <div class="data-card">
                         <div class="data-card-label">
                             Verify Success Rate
                             <span class="info-icon">ⓘ
                                 <div class="tooltip">
                                     <div class="tooltip-title">Offer Verification Success Rate</div>
-                                    The percentage of successful valid quotes in your verification requests for this airline.
+                                    The percentage of successful valid quotes in your verification requests for this airline. Includes both standard Verify API and GetOffer API calls.
                                     <div class="tooltip-compare">📊 Comparison: Yesterday = vs D-2 | Last 7 Days = vs Previous 7 Days</div>
                                     <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
                                 </div>
@@ -453,6 +453,20 @@
                         <div class="data-card-value success">2.1%</div>
                         <div class="data-card-trend trend-up">↓ 0.2% vs prev</div>
                     </div>
+                    <div class="data-card">
+                        <div class="data-card-label">
+                            Booking Count
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <div class="tooltip-title">Booking Count</div>
+                                    Total booking orders for this airline in the selected period.
+                                    <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="data-card-value">1,245</div>
+                        <div class="data-card-trend trend-up">↑ 8.3% vs prev</div>
+                    </div>
                 </div>
                 <div class="subsection-label">Trend Charts</div>
                 <div class="grid-2">
@@ -462,7 +476,7 @@
                             <span class="info-icon">ⓘ
                                 <div class="tooltip">
                                     <div class="tooltip-title">Offer Verification Success Rate Trend</div>
-                                    Trend line chart showing verification success rate changes over 7/30 days.
+                                    Trend line chart showing verification success rate changes over 7/30 days. Includes both Verify API and GetOffer API calls.
                                     <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
                                 </div>
                             </span>
@@ -505,14 +519,13 @@
                     <thead>
                         <tr>
                             <th>Route (O&D)</th>
-                            <th>Cities</th>
                             <th>Type</th>
                             <th class="sortable">
                                 <span class="th-label">Verify Rate ↓
                                     <span class="info-icon">ⓘ
                                         <div class="tooltip">
                                             <div class="tooltip-title">Offer Verification Success Rate</div>
-                                            The percentage of successful valid quotes for this route.
+                                            The percentage of successful valid quotes for this route. Includes both Verify API and GetOffer API calls.
                                             <div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div>
                                         </div>
                                     </span>
@@ -567,7 +580,6 @@
                     <tbody>
                         <tr>
                             <td><strong>DEL → BOM</strong></td>
-                            <td>Delhi → Mumbai</td>
                             <td>Direct</td>
                             <td><span class="rate-value success">98.2%</span></td>
                             <td><span class="rate-value success">3.1%</span></td>
@@ -577,7 +589,6 @@
                         </tr>
                         <tr>
                             <td><strong>BLR → DEL</strong></td>
-                            <td>Bangalore → Delhi</td>
                             <td>Direct</td>
                             <td><span class="rate-value success">97.8%</span></td>
                             <td><span class="rate-value success">3.5%</span></td>
@@ -587,7 +598,6 @@
                         </tr>
                         <tr>
                             <td><strong>DEL → CCU</strong></td>
-                            <td>Delhi → Kolkata</td>
                             <td>Direct</td>
                             <td><span class="rate-value success">96.5%</span></td>
                             <td><span class="rate-value success">4.2%</span></td>
@@ -597,7 +607,6 @@
                         </tr>
                         <tr>
                             <td><strong>HYD → BOM</strong></td>
-                            <td>Hyderabad → Mumbai</td>
                             <td>Direct</td>
                             <td><span class="rate-value success">95.8%</span></td>
                             <td><span class="rate-value success">5.1%</span></td>
@@ -607,7 +616,6 @@
                         </tr>
                         <tr>
                             <td><strong>MAA → DEL</strong></td>
-                            <td>Chennai → Delhi</td>
                             <td>Direct</td>
                             <td><span class="rate-value success">94.2%</span></td>
                             <td><span class="rate-value warning">6.8%</span></td>
@@ -617,7 +625,6 @@
                         </tr>
                         <tr>
                             <td><strong>DEL → SIN</strong></td>
-                            <td>Delhi → Singapore</td>
                             <td>Direct</td>
                             <td><span class="rate-value warning">88.5%</span></td>
                             <td><span class="rate-value warning">9.2%</span></td>
