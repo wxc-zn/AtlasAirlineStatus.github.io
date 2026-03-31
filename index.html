@@ -318,24 +318,6 @@
             </div>
             <div class="section-body">
                 <div class="grid-3">
-                    <!-- Offer Verification Success Rate Top 10 -->
-                    <div class="ranking-section">
-                        <div class="ranking-label">
-                            Offer Verification Success Rate Top 10
-                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Offer Verification Success Rate Top 10</div>The 10 airlines with the highest offer verification success rate on Atlas. Includes both standard Verify API and GetOffer API calls.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
-                        </div>
-                        <ul class="ranking-list" id="verifyRateList">
-                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value success">98.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">97.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value success">96.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span><span class="ranking-value success">95.4%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value success">94.1%</span></li>
-                        </ul>
-                        <div class="ranking-pagination">
-                            <button class="ranking-page-btn active" onclick="showPage('verifyRate', 1)">1-5</button>
-                            <button class="ranking-page-btn" onclick="showPage('verifyRate', 2)">6-10</button>
-                        </div>
-                    </div>
                     <!-- Airline Popularity Top 30 -->
                     <div class="ranking-section">
                         <div class="ranking-label">
@@ -360,14 +342,31 @@
                             <button class="ranking-page-btn" onclick="showPage('popularity', 3)">21-30</button>
                         </div>
                     </div>
-                    <!-- Route Popularity Top 10 -->
+                    <!-- Offer Verification Success Rate Top 10 -->
                     <div class="ranking-section">
                         <div class="ranking-label">
-                            Route Popularity Top 10 (by orders)
-                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Route Popularity Top 10</div>Popular routes ranked by order volume.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
+                            Offer Verification Success Rate Top 10
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Offer Verification Success Rate Top 10</div>The 10 airlines with the highest offer verification success rate on Atlas. Includes both standard Verify API and GetOffer API calls.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span>
                         </div>
-                        <div style="text-align:right;margin-bottom:6px;">
-                            <button onclick="downloadRouteData()" style="padding:3px 10px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:11px;cursor:pointer;">⬇ Download Top 1000</button>
+                        <ul class="ranking-list" id="verifyRateList">
+                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-en.html">IndiGo (6E)</a></span><span class="ranking-value success">98.5%</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-en.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">97.8%</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-en.html">Frontier (F9)</a></span><span class="ranking-value success">96.2%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-en.html">Azul Airlines (AD)</a></span><span class="ranking-value success">95.4%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-en.html">Lion Airlines (JT)</a></span><span class="ranking-value success">94.1%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">6</span><span class="ranking-name"><a href="airline-detail-en.html">Scoot (TR)</a></span><span class="ranking-value success">93.5%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">7</span><span class="ranking-name"><a href="airline-detail-en.html">Cebu Pacific (5J)</a></span><span class="ranking-value success">92.8%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">8</span><span class="ranking-name"><a href="airline-detail-en.html">VietJet Air (VJ)</a></span><span class="ranking-value success">91.6%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">9</span><span class="ranking-name"><a href="airline-detail-en.html">AirAsia X (D7)</a></span><span class="ranking-value success">90.3%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">10</span><span class="ranking-name"><a href="airline-detail-en.html">Jetstar (JQ)</a></span><span class="ranking-value success">89.7%</span></li>
+                        </ul>
+                    </div>
+                    <!-- Route Popularity Top 10 -->
+                    <div class="ranking-section">
+                        <div class="ranking-label" style="display:flex;justify-content:space-between;align-items:center;">
+                            <span>Route Popularity Top 10 (by orders)
+                            <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Route Popularity Top 10</div>Popular routes ranked by order volume.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></span>
+                            <button onclick="downloadRouteData()" style="padding:3px 10px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:11px;cursor:pointer;white-space:nowrap;">⬇ Download Top 1000</button>
                         </div>
                         <ul class="ranking-list" id="routePopularityList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name">DEL-BOM (Delhi-Mumbai)</span></li>
@@ -375,11 +374,12 @@
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name">DEN-PHX (Denver-Phoenix)</span></li>
                             <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name">GRU-CGH (São Paulo Guarulhos→Congonhas)</span></li>
                             <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name">CGK-SUB (Jakarta-Surabaya)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">6</span><span class="ranking-name">BKK-CNX (Bangkok-Chiang Mai)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">7</span><span class="ranking-name">KUL-PEN (Kuala Lumpur-Penang)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">8</span><span class="ranking-name">MNL-CEB (Manila-Cebu)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">9</span><span class="ranking-name">JED-RUH (Jeddah-Riyadh)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">10</span><span class="ranking-name">DXB-BOM (Dubai-Mumbai)</span></li>
                         </ul>
-                        <div class="ranking-pagination">
-                            <button class="ranking-page-btn active" onclick="showPage('routePopularity', 1)">1-5</button>
-                            <button class="ranking-page-btn" onclick="showPage('routePopularity', 2)">6-10</button>
-                        </div>
                     </div>
                 </div>
             </div>
