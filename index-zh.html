@@ -83,7 +83,7 @@
         .ranking-value.success { color: var(--success-color); }
         .ranking-value.warning { color: var(--warning-color); }
         .ranking-value.error { color: var(--error-color); }
-        .data-overview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .data-overview { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
         .data-item { text-align: center; padding: 12px; background: #fafafa; border-radius: 4px; }
         .data-item-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .data-item-value { font-size: 24px; font-weight: 500; }
@@ -117,6 +117,7 @@
         .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
         .status-badge.online { background: #f6ffed; color: #52c41a; }
         .status-badge.maintenance { background: #fff2f0; color: #ff4d4f; }
+        .modal-search { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px; margin-bottom: 12px; }
     </style>
 </head>
 <body>
@@ -144,7 +145,7 @@
         <!-- 顶部统计卡片 -->
         <div class="stats-row">
             <div class="stat-card online" onclick="showModal('onlineModal')">
-                <div class="stat-label">在线航司<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">在线航司数量</div>当前可正常使用的航司数量。这些航司处于正常运营状态，可正常进行搜索、验价、出票操作。<div class="tooltip-refresh">🔄 刷新频率: 每5分钟自动刷新</div></div></span></div>
+                <div class="stat-label">活跃航司<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">活跃航司数量</div>当前可正常使用的航司数量。这些航司处于正常运营状态，可正常进行搜索、验价、出票操作。<div class="tooltip-refresh">🔄 刷新频率: 每5分钟自动刷新</div></div></span></div>
                 <div class="stat-value">47</div>
                 <div class="stat-sub">点击查看详情 →</div>
             </div>
@@ -164,7 +165,7 @@
         <div class="section highlight">
             <div class="section-header">
                 <div>
-                    <div class="section-title">📢 动态公告</div>
+                    <div class="section-title">📢 平台公告</div>
                     <div class="section-subtitle">维护/恢复: 仅您开通的航司 | 新上线/余额: 全部航司</div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -182,6 +183,7 @@
                 </div>
             </div>
             <div class="section-body">
+                <div style="background:#e6f7ff;border:1px solid #91d5ff;border-radius:4px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#096dd9;">ℹ️ 平台级公告：适用于Atlas平台所有航司，所有客户均可见（非账户专属）。</div>
                 <ul class="notice-list">
                     <li class="notice-item"><span class="notice-tag maintenance">维护</span><span class="notice-content"><a href="airline-detail-zh.html">Vueling (VY)</a> 因数据质量问题暂停服务</span><span class="notice-time">2025-12-11 20:30:45 (UTC+8)</span></li>
                     <li class="notice-item"><span class="notice-tag maintenance">维护</span><span class="notice-content"><a href="airline-detail-zh.html">Pegasus (PC)</a> API响应异常</span><span class="notice-time">2025-12-11 17:15:22 (UTC+8)</span></li>
@@ -192,12 +194,12 @@
             </div>
         </div>
 
-        <!-- 平台数据模块 -->
+        <!-- 平台航司表现排名 -->
         <div class="section">
             <div class="section-header">
                 <div>
                     <div class="section-title">平台航司表现排名</div>
-                    <div class="section-subtitle">Atlas平台整体供给质量</div>
+                    <div class="section-subtitle">Atlas平台整体供给质量 <span style="background:#fff7e6;color:#d48806;padding:1px 8px;border-radius:3px;font-size:11px;margin-left:8px;border:1px solid #ffe58f;">平台级数据 · 非账户专属</span></div>
                 </div>
                 <div class="time-selector">
                     <button class="time-btn">昨日</button>
@@ -206,58 +208,72 @@
             </div>
             <div class="section-body">
                 <div class="grid-3">
+                    <!-- 航司热门度 Top 30 -->
                     <div class="ranking-section">
-                        <div class="ranking-label">验价成功率 Top10<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率排名 Top10</div>Atlas平台验价成功率最高的10家航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
-                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">IndiGo (6E)</a></span><span class="ranking-value success">98.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">97.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Frontier (F9)</a></span><span class="ranking-value success">96.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></span><span class="ranking-value success">95.4%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="not-activated">未开通</span></span><span class="ranking-value success">94.1%</span></li>
-                        </ul>
-                        <div class="ranking-pagination">
-                            <button class="ranking-page-btn active">1-5</button>
-                            <button class="ranking-page-btn">6-10</button>
-                        </div>
-                    </div>
-                    <div class="ranking-section">
-                        <div class="ranking-label">航司热门度 Top10<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">航司热门度排名 Top10</div>按订单量排序，订单量最高的10家航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
+                        <div class="ranking-label">航司热门度 Top 30（按订单量）<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">航司热门度 Top 30</div>Atlas平台订单量最高的航司排名。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                        <ul class="ranking-list" id="popularityList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">IndiGo (6E)</a></span></li>
                             <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></span></li>
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Frontier (F9)</a></span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-not-activated-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></span></li>
                             <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="not-activated">未开通</span></span></li>
+                            <li class="ranking-item"><span class="ranking-num">6</span><span class="ranking-name"><a href="airline-detail-zh.html">Scoot (TR)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">7</span><span class="ranking-name"><a href="airline-detail-zh.html">Cebu Pacific (5J)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">8</span><span class="ranking-name"><a href="airline-detail-zh.html">VietJet Air (VJ)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">9</span><span class="ranking-name"><a href="airline-detail-zh.html">AirAsia X (D7)</a></span></li>
+                            <li class="ranking-item"><span class="ranking-num">10</span><span class="ranking-name"><a href="airline-detail-zh.html">Jetstar (JQ)</a></span></li>
                         </ul>
                         <div class="ranking-pagination">
-                            <button class="ranking-page-btn active">1-5</button>
-                            <button class="ranking-page-btn">6-10</button>
+                            <button class="ranking-page-btn active" onclick="showPage('popularity', 1)">1-10</button>
+                            <button class="ranking-page-btn" onclick="showPage('popularity', 2)">11-20</button>
+                            <button class="ranking-page-btn" onclick="showPage('popularity', 3)">21-30</button>
                         </div>
                     </div>
+                    <!-- 验价成功率 Top 10 -->
                     <div class="ranking-section">
-                        <div class="ranking-label">航线热门度 Top10<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">航线热门度排名 Top10</div>按订单量排序，订单量最高的10条航线。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
+                        <div class="ranking-label">验价成功率 Top 10<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率排名 Top 10</div>Atlas平台验价成功率最高的10家航司。包含标准验价API和GetOffer API调用。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                        <ul class="ranking-list" id="verifyRateList">
+                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">IndiGo (6E)</a></span><span class="ranking-value success">98.5%</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></span><span class="ranking-value success">97.8%</span></li>
+                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Frontier (F9)</a></span><span class="ranking-value success">96.2%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></span><span class="ranking-value success">95.4%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="not-activated">未开通</span></span><span class="ranking-value success">94.1%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">6</span><span class="ranking-name"><a href="airline-detail-zh.html">Scoot (TR)</a></span><span class="ranking-value success">93.5%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">7</span><span class="ranking-name"><a href="airline-detail-zh.html">Cebu Pacific (5J)</a></span><span class="ranking-value success">92.8%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">8</span><span class="ranking-name"><a href="airline-detail-zh.html">VietJet Air (VJ)</a></span><span class="ranking-value success">91.6%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">9</span><span class="ranking-name"><a href="airline-detail-zh.html">AirAsia X (D7)</a></span><span class="ranking-value success">90.3%</span></li>
+                            <li class="ranking-item"><span class="ranking-num">10</span><span class="ranking-name"><a href="airline-detail-zh.html">Jetstar (JQ)</a></span><span class="ranking-value success">89.7%</span></li>
+                        </ul>
+                    </div>
+                    <!-- 航线热门度 Top 10 -->
+                    <div class="ranking-section">
+                        <div class="ranking-label" style="display:flex;justify-content:space-between;align-items:center;">
+                            <span>航线热门度 Top 10（按订单量）<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">航线热门度 Top 10</div>按订单量排序，订单量最高的10条航线。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></span>
+                            <button onclick="downloadRouteData()" style="padding:3px 10px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:11px;cursor:pointer;white-space:nowrap;">⬇ 下载 Top 1000</button>
+                        </div>
+                        <ul class="ranking-list" id="routePopularityList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name">DEL-BOM (德里-孟买)</span></li>
                             <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name">LAS-LAX (拉斯维加斯-洛杉矶)</span></li>
                             <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name">DEN-PHX (丹佛-凤凰城)</span></li>
                             <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name">GRU-CGH (圣保罗-圣保罗)</span></li>
                             <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name">CGK-SUB (雅加达-泗水)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">6</span><span class="ranking-name">BKK-CNX (曼谷-清迈)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">7</span><span class="ranking-name">KUL-PEN (吉隆坡-槟城)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">8</span><span class="ranking-name">MNL-CEB (马尼拉-宿务)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">9</span><span class="ranking-name">JED-RUH (吉达-利雅得)</span></li>
+                            <li class="ranking-item"><span class="ranking-num">10</span><span class="ranking-name">DXB-BOM (迪拜-孟买)</span></li>
                         </ul>
-                        <div class="ranking-pagination">
-                            <button class="ranking-page-btn active">1-5</button>
-                            <button class="ranking-page-btn">6-10</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 客户专属数据模块 -->
+        <!-- 我的数据质量概览 -->
         <div class="section">
             <div class="section-header">
                 <div>
                     <div class="section-title">我的数据质量概览</div>
-                    <div class="section-subtitle">基于您的API调用数据</div>
+                    <div class="section-subtitle">基于您的API调用数据 · 验价指标包含GetOffer调用</div>
                 </div>
                 <div class="time-selector">
                     <button class="time-btn">1小时</button>
@@ -274,7 +290,7 @@
                         <div class="data-item-trend trend-up">↑ 0.8% 环比</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-item-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">我的整体验价成功率</div>您在所有航司的验价请求中，成功获取有效报价的比例。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                        <div class="data-item-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">我的整体验价成功率</div>您在所有航司的验价请求中，成功获取有效报价的比例。包含标准验价API和GetOffer API调用：(验价成功 + GetOffer成功) / 总验价请求 × 100%<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
                         <div class="data-item-value" style="color: var(--success-color)">92.3%</div>
                         <div class="data-item-trend trend-up">↑ 1.2% 环比</div>
                     </div>
@@ -293,106 +309,156 @@
                         <div class="data-item-value" style="color: var(--warning-color)">5.2%</div>
                         <div class="data-item-trend trend-down">↑ 0.3% 环比</div>
                     </div>
+                    <div class="data-item">
+                        <div class="data-item-label">预订量<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">我的预订总量</div>您在所选时间段内的总预订量。<div class="tooltip-compare">📊 环比: 昨日=对比前天 | 近7天=对比前7天</div><div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                        <div class="data-item-value" style="color: var(--primary-color)">68,540</div>
+                        <div class="data-item-trend trend-up">↑ 3.2% 环比</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 我的航司 - 按预订量排名 Top 10 -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">我的航司 - 预订量排名 Top 10</div>
+                    <div class="section-subtitle">按预订量排序</div>
+                </div>
+                <div class="time-selector">
+                    <button class="time-btn">1小时</button>
+                    <button class="time-btn">4小时</button>
+                    <button class="time-btn">昨日</button>
+                    <button class="time-btn active">近7天</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="ranking-section">
+                    <ul class="ranking-list">
+                        <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">IndiGo (6E)</a></span><span class="ranking-value">12,450</span></li>
+                        <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></span><span class="ranking-value">9,832</span></li>
+                        <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Frontier (F9)</a></span><span class="ranking-value">8,567</span></li>
+                        <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Scoot (TR)</a></span><span class="ranking-value">7,234</span></li>
+                        <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Cebu Pacific (5J)</a></span><span class="ranking-value">6,891</span></li>
+                    </ul>
+                    <div class="ranking-pagination">
+                        <button class="ranking-page-btn active">1-5</button>
+                        <button class="ranking-page-btn">6-10</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- 我的航司表现排名 -->
-        <div class="grid-3">
-            <div class="section">
-                <div class="section-header">
-                    <div>
-                        <div class="section-title">我的航司 - 成功率排名</div>
-                        <div class="section-subtitle">最高/最低表现</div>
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">我的航司 - 成功率排名</div>
+                    <div class="section-subtitle">最高/最低表现</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <select style="padding: 4px 8px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-white);">
+                        <option value="top5">Top 5</option>
+                        <option value="bottom5">Bottom 5</option>
+                    </select>
+                    <div class="time-selector">
+                        <button class="time-btn">1小时</button>
+                        <button class="time-btn">4小时</button>
+                        <button class="time-btn">昨日</button>
+                        <button class="time-btn active">近7天</button>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <select style="padding: 4px 8px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-white);">
-                            <option value="bottom5">Bottom5</option>
-                            <option value="top5">Top5</option>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="ranking-section">
+                    <div class="ranking-label">
+                        验价成功率
+                        <select class="filter-select" style="margin-left: 8px; padding: 2px 8px; font-size: 12px;">
+                            <option value="top5" selected>Top 5</option>
+                            <option value="bottom5">Bottom 5</option>
                         </select>
-                        <div class="time-selector">
-                            <button class="time-btn">1小时</button>
-                            <button class="time-btn">4小时</button>
-                            <button class="time-btn">昨日</button>
-                            <button class="time-btn active">近7天</button>
-                        </div>
+                        <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率最高/最低的航司</div>您使用的航司中，验价成功率排名。仅包含预订量排名前20%的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span>
                     </div>
+                    <ul class="ranking-list">
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value error">72.3%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value error">78.5%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fffbe6;color:#d48806;">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">82.1%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">85.2%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value warning">84.6%</span></li>
+                    </ul>
                 </div>
-                <div class="section-body">
-                    <div class="ranking-section">
-                        <div class="ranking-label">验价成功率 Bottom5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率最低的航司</div>您使用的航司中，验价成功率最低的航司，需重点关注。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
-                            <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value error">72.3%</span></li>
-                            <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value error">78.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num" style="background:#fffbe6;color:#d48806;">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">82.1%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">85.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value warning">84.6%</span></li>
-                        </ul>
+                <div class="ranking-section">
+                    <div class="ranking-label">
+                        生单成功率
+                        <select class="filter-select" style="margin-left: 8px; padding: 2px 8px; font-size: 12px;">
+                            <option value="top5" selected>Top 5</option>
+                            <option value="bottom5">Bottom 5</option>
+                        </select>
+                        <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率最高/最低的航司</div>您使用的航司中，订单创建成功率排名。仅包含预订量排名前20%的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span>
                     </div>
-                    <div class="ranking-section">
-                        <div class="ranking-label">生单成功率 Bottom5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率最低的航司</div>您使用的航司中，订单创建成功率最低的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
-                            <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value error">70.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value error">75.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num" style="background:#fffbe6;color:#d48806;">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">80.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value warning">82.1%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">83.6%</span></li>
-                        </ul>
-                    </div>
+                    <ul class="ranking-list">
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value error">70.8%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value error">75.2%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fffbe6;color:#d48806;">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">80.5%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value warning">82.1%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">83.6%</span></li>
+                    </ul>
                 </div>
             </div>
+        </div>
 
-            <div class="section">
-                <div class="section-header">
-                    <div>
-                        <div class="section-title">我的航司 - 验价变价率</div>
-                        <div class="section-subtitle">数值越高=波动越大</div>
-                    </div>
-                    <div class="time-selector">
-                        <button class="time-btn">1小时</button>
-                        <button class="time-btn">4小时</button>
-                        <button class="time-btn">昨日</button>
-                        <button class="time-btn active">近7天</button>
-                    </div>
+        <!-- 验价变价率排名 -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">我的航司 - 验价变价率</div>
+                    <div class="section-subtitle">数值越高=波动越大</div>
                 </div>
-                <div class="section-body">
-                    <div class="ranking-section">
-                        <div class="ranking-label">验价变价率 Top5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率最高的航司</div>您使用的航司中，验价时价格变动最频繁的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
-                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value error">18.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value error">16.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">15.2%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value warning">13.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">12.8%</span></li>
-                        </ul>
-                    </div>
+                <div class="time-selector">
+                    <button class="time-btn">1小时</button>
+                    <button class="time-btn">4小时</button>
+                    <button class="time-btn">昨日</button>
+                    <button class="time-btn active">近7天</button>
                 </div>
             </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <div>
-                        <div class="section-title">我的航司 - 生单变价率</div>
-                        <div class="section-subtitle">数值越高=波动越大</div>
-                    </div>
-                    <div class="time-selector">
-                        <button class="time-btn">1小时</button>
-                        <button class="time-btn">4小时</button>
-                        <button class="time-btn">昨日</button>
-                        <button class="time-btn active">近7天</button>
-                    </div>
+            <div class="section-body">
+                <div class="ranking-section">
+                    <div class="ranking-label">验价变价率 Top5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率最高的航司</div>您使用的航司中，验价时价格变动最频繁的航司。仅包含预订量排名前20%的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                    <ul class="ranking-list">
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value error">18.5%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value error">15.2%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fffbe6;color:#d48806;">3</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">12.8%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value warning">11.3%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value warning">9.7%</span></li>
+                    </ul>
                 </div>
-                <div class="section-body">
-                    <div class="ranking-section">
-                        <div class="ranking-label">生单变价率 Top5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率最高的航司</div>您使用的航司中，从验价到生单环节价格变动最频繁的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
-                        <ul class="ranking-list">
-                            <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value error">12.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-2">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value warning">10.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num top-3">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">9.8%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value warning">8.5%</span></li>
-                            <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">7.5%</span></li>
-                        </ul>
-                    </div>
+            </div>
+        </div>
+
+        <!-- 生单变价率排名 -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">我的航司 - 生单变价率</div>
+                    <div class="section-subtitle">数值越高=波动越大</div>
+                </div>
+                <div class="time-selector">
+                    <button class="time-btn">1小时</button>
+                    <button class="time-btn">4小时</button>
+                    <button class="time-btn">昨日</button>
+                    <button class="time-btn active">近7天</button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="ranking-section">
+                    <div class="ranking-label">生单变价率 Top5<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率最高的航司</div>您使用的航司中，从验价到生单环节价格变动最频繁的航司。仅包含预订量排名前20%的航司。<div class="tooltip-refresh">🔄 刷新频率: 每日14:00更新</div></div></span></div>
+                    <ul class="ranking-list">
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fff2f0;color:#ff4d4f;">1</span><span class="ranking-name"><a href="airline-detail-zh.html">Ryanair (FR)</a></span><span class="ranking-value error">12.1%</span></li>
+                        <li class="ranking-item"><span class="ranking-num" style="background:#fffbe6;color:#d48806;">2</span><span class="ranking-name"><a href="airline-detail-zh.html">Wizz Air (W6)</a></span><span class="ranking-value warning">9.8%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">3</span><span class="ranking-name"><a href="airline-detail-zh.html">Vueling (VY)</a></span><span class="ranking-value warning">8.2%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">4</span><span class="ranking-name"><a href="airline-detail-zh.html">easyJet (U2)</a></span><span class="ranking-value warning">7.5%</span></li>
+                        <li class="ranking-item"><span class="ranking-num">5</span><span class="ranking-name"><a href="airline-detail-zh.html">Pegasus (PC)</a></span><span class="ranking-value warning">6.4%</span></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -401,16 +467,17 @@
     <!-- 弹窗 -->
     <div class="modal-overlay" id="onlineModal">
         <div class="modal">
-            <div class="modal-header"><span class="modal-title">在线航司列表 (47)</span><button class="modal-close" onclick="hideModal('onlineModal')">×</button></div>
+            <div class="modal-header"><span class="modal-title">活跃航司列表 (47)</span><button class="modal-close" onclick="hideModal('onlineModal')">×</button></div>
             <div class="modal-body">
+                <input type="text" class="modal-search" placeholder="搜索航司..." oninput="filterModalList(this, 'onlineModal')">
                 <table class="simple-table">
                     <thead><tr><th>航司名称</th><th>状态</th></tr></thead>
                     <tbody>
-                        <tr><td><a href="airline-detail-zh.html">IndiGo (6E)</a></td><td><span class="status-badge online">在线</span></td></tr>
-                        <tr><td><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></td><td><span class="status-badge online">在线</span></td></tr>
-                        <tr><td><a href="airline-detail-zh.html">Frontier (F9)</a></td><td><span class="status-badge online">在线</span></td></tr>
-                        <tr><td><a href="airline-detail-not-activated-zh.html">Azul Airlines (AD)</a><span class="not-activated" style="margin-left:8px;">未开通</span></td><td><span class="status-badge online">在线</span></td></tr>
-                        <tr><td><a href="airline-detail-zh.html">Lion Airlines (JT)</a></td><td><span class="status-badge online">在线</span></td></tr>
+                        <tr><td><a href="airline-detail-zh.html">Azul Airlines (AD)</a><span class="not-activated" style="margin-left:8px;">未开通</span></td><td><span class="status-badge online">活跃</span></td></tr>
+                        <tr><td><a href="airline-detail-zh.html">Cebu Pacific (5J)</a></td><td><span class="status-badge online">活跃</span></td></tr>
+                        <tr><td><a href="airline-detail-zh.html">Frontier (F9)</a></td><td><span class="status-badge online">活跃</span></td></tr>
+                        <tr><td><a href="airline-detail-zh.html">IndiGo (6E)</a></td><td><span class="status-badge online">活跃</span></td></tr>
+                        <tr><td><a href="airline-detail-zh.html">Lion Airlines (JT)</a></td><td><span class="status-badge online">活跃</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -421,12 +488,14 @@
         <div class="modal">
             <div class="modal-header"><span class="modal-title">维护中航司列表 (3)</span><button class="modal-close" onclick="hideModal('faultModal')">×</button></div>
             <div class="modal-body">
+                <div style="background:#fff7e6;border:1px solid #ffe58f;border-radius:4px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#d48806;">⚠️ 维护状态基于搜索能力判定。使用GetOffer的客户可能仍然可以对这些航司完成验价操作。</div>
+                <input type="text" class="modal-search" placeholder="搜索航司..." oninput="filterModalList(this, 'faultModal')">
                 <table class="simple-table">
                     <thead><tr><th>航司名称</th><th>原因</th><th>开始时间</th></tr></thead>
                     <tbody>
-                        <tr><td><a href="airline-detail-zh.html">Vueling (VY)</a></td><td>数据质量问题</td><td>2025-12-11 20:30:45</td></tr>
-                        <tr><td><a href="airline-detail-zh.html">Pegasus (PC)</a></td><td>API响应异常</td><td>2025-12-11 17:15:22</td></tr>
                         <tr><td><a href="airline-detail-zh.html">AirAsia (AK)</a></td><td>系统维护</td><td>2025-12-11 10:00:00</td></tr>
+                        <tr><td><a href="airline-detail-zh.html">Pegasus (PC)</a></td><td>API响应异常</td><td>2025-12-11 17:15:22</td></tr>
+                        <tr><td><a href="airline-detail-zh.html">Vueling (VY)</a></td><td>数据质量问题</td><td>2025-12-11 20:30:45</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -437,6 +506,7 @@
         <div class="modal">
             <div class="modal-header"><span class="modal-title">余额不足航司 (2)</span><button class="modal-close" onclick="hideModal('balanceModal')">×</button></div>
             <div class="modal-body">
+                <input type="text" class="modal-search" placeholder="搜索航司..." oninput="filterModalList(this, 'balanceModal')">
                 <table class="simple-table">
                     <thead><tr><th>航司名称</th><th>状态</th></tr></thead>
                     <tbody>
@@ -483,6 +553,21 @@
                 });
             });
         });
+        function filterModalList(input, modalId) {
+            const keyword = input.value.toLowerCase();
+            const rows = document.getElementById(modalId).querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(keyword) ? '' : 'none';
+            });
+        }
+        function downloadRouteData() {
+            const csvContent = "city_pair,airline_code\nDEL-BOM,6E\nLAS-LAX,NK\nDEN-PHX,F9\nGRU-CGH,AD\nCGK-SUB,JT";
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'route_popularity_top1000.csv';
+            a.click();
+        }
     </script>
 </body>
 </html>
