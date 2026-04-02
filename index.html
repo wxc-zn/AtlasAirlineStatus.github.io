@@ -366,7 +366,7 @@
                         <div class="ranking-label" style="display:flex;justify-content:space-between;align-items:center;">
                             <span>Route Popularity Top 10 (by orders)
                             <span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">Route Popularity Top 10</div>Popular routes ranked by order volume.<div class="tooltip-refresh">🔄 Refresh: Daily at 14:00</div></div></span></span>
-                            <button onclick="downloadRouteData()" style="padding:3px 10px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:11px;cursor:pointer;white-space:nowrap;">⬇ Download Top 1000</button>
+                            <button onclick="showModal('downloadModal')" style="padding:3px 10px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:11px;cursor:pointer;white-space:nowrap;">⬇ Download Top 1000</button>
                         </div>
                         <ul class="ranking-list" id="routePopularityList">
                             <li class="ranking-item"><span class="ranking-num top-1">1</span><span class="ranking-name">DEL-BOM (Delhi-Mumbai)</span></li>
@@ -669,6 +669,19 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><span class="modal-title">Download Route Top 1000</span><button class="modal-close" onclick="hideModal('downloadModal')">×</button></div>
+            <div class="modal-body" style="text-align:center;padding:24px;">
+                <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Select a time range for the route popularity data:</p>
+                <div style="display:flex;gap:12px;justify-content:center;">
+                    <button onclick="downloadRouteData('7d')" style="padding:10px 24px;border:1px solid var(--primary-color);background:var(--bg-white);color:var(--primary-color);border-radius:4px;font-size:13px;cursor:pointer;">Last 7 Days</button>
+                    <button onclick="downloadRouteData('30d')" style="padding:10px 24px;border:1px solid var(--primary-color);background:var(--primary-color);color:white;border-radius:4px;font-size:13px;cursor:pointer;">Last 30 Days</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showModal(id) { document.getElementById(id).classList.add('show'); }
         function hideModal(id) { document.getElementById(id).classList.remove('show'); }
@@ -846,11 +859,13 @@
             rows.sort((a, b) => a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim()));
             rows.forEach(r => tbody.appendChild(r));
         }
-        function downloadRouteData() {
+        function downloadRouteData(range) {
+            hideModal('downloadModal');
+            const label = range === '7d' ? 'last_7_days' : 'last_30_days';
             const csv = 'city_pair,airline_code\nDEL-BOM,6E\nLAS-LAX,NK\nDEN-PHX,F9\nGRU-CGH,AD\nCGK-SUB,JT\n...(top 1000)';
             const blob = new Blob([csv], {type:'text/csv'});
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-            a.download = 'route_popularity_top1000.csv'; a.click();
+            a.download = 'route_popularity_top1000_' + label + '.csv'; a.click();
         }
     </script>
 </body>

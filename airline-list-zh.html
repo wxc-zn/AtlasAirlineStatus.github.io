@@ -60,6 +60,40 @@
         .rate-value.warning { color: var(--warning-color); }
         .rate-value.error { color: var(--error-color); }
         .not-activated { display: inline-block; padding: 1px 6px; background: #f0f0f0; color: var(--text-muted); border-radius: 3px; font-size: 11px; margin-left: 6px; }
+        .offline-badge {
+            display: inline-block;
+            background: #ff4d4f;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 5px;
+            border-radius: 2px;
+            margin-left: 6px;
+            vertical-align: middle;
+            position: relative;
+            cursor: default;
+        }
+        .offline-badge::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            font-size: 12px;
+            font-weight: normal;
+            padding: 6px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 100;
+        }
+        .offline-badge:hover::after { visibility: visible; opacity: 1; }
+        .data-table th.sortable { cursor: pointer; }
+        .data-table th.sortable:hover { color: var(--primary-color); }
         .pagination { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
         .pagination-info { font-size: 13px; color: var(--text-muted); }
         .pagination-btns { display: flex; gap: 4px; }
@@ -105,7 +139,7 @@
             <input type="text" class="filter-input" placeholder="搜索航司名称或代码...">
             <select class="filter-select">
                 <option value="">全部状态</option>
-                <option value="online">在线</option>
+                <option value="online">活跃</option>
                 <option value="maintenance">维护中</option>
                 <option value="balance">余额不足</option>
             </select>
@@ -122,18 +156,20 @@
                             <tr>
                                 <th style="width: 50px;">关注</th>
                                 <th>航司名称</th>
-                                <th><span class="th-label">状态<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">状态</div>当前运营状态: 在线 / 维护中 / 余额不足<div class="tooltip-refresh">🔄 每5分钟刷新</div></div></span></span></th>
-                                <th><span class="th-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
-                                <th><span class="th-label">验价变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
-                                <th><span class="th-label">生单成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
-                                <th><span class="th-label">生单变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">预订量 ↓<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">预订量</div>该航司在所选时间段内的总预订量。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th><span class="th-label">状态<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">状态</div>当前运营状态: 活跃 / 维护中 / 余额不足<div class="tooltip-refresh">🔄 每5分钟刷新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">验价变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">生单成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">生单变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><button class="star-btn starred" onclick="toggleStar(this)">★</button></td>
                                 <td><a href="airline-detail-zh.html">IndiGo (6E)</a></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td>12,450</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">98.5%</span></td>
                                 <td><span class="rate-value success">3.2%</span></td>
                                 <td><span class="rate-value success">96.8%</span></td>
@@ -142,7 +178,8 @@
                             <tr>
                                 <td><button class="star-btn starred" onclick="toggleStar(this)">★</button></td>
                                 <td><a href="airline-detail-zh.html">Spirit Airlines (NK)</a></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td>9,832</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">97.2%</span></td>
                                 <td><span class="rate-value success">4.5%</span></td>
                                 <td><span class="rate-value success">95.1%</span></td>
@@ -151,7 +188,8 @@
                             <tr>
                                 <td><button class="star-btn starred" onclick="toggleStar(this)">★</button></td>
                                 <td><a href="airline-detail-zh.html">Frontier (F9)</a></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td>8,567</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">96.8%</span></td>
                                 <td><span class="rate-value success">5.1%</span></td>
                                 <td><span class="rate-value success">94.2%</span></td>
@@ -178,8 +216,9 @@
                             <tr>
                                 <th style="width: 50px;">关注</th>
                                 <th>航司名称</th>
-                                <th><span class="th-label">状态<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">状态</div>当前运营状态: 在线 / 维护中 / 余额不足<div class="tooltip-refresh">🔄 每5分钟刷新</div></div></span></span></th>
-                                <th class="sortable"><span class="th-label">验价成功率 ↓<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">预订量 ↓<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">预订量</div>该航司在所选时间段内的总预订量。<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
+                                <th><span class="th-label">状态<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">状态</div>当前运营状态: 活跃 / 维护中 / 余额不足<div class="tooltip-refresh">🔄 每5分钟刷新</div></div></span></span></th>
+                                <th class="sortable"><span class="th-label">验价成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
                                 <th class="sortable"><span class="th-label">验价变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">验价变价率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
                                 <th class="sortable"><span class="th-label">生单成功率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单成功率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
                                 <th class="sortable"><span class="th-label">生单变价率<span class="info-icon">ⓘ<div class="tooltip"><div class="tooltip-title">生单变价率</div>已开通: 您的数据 | 未开通: 平台数据<div class="tooltip-refresh">🔄 每日14:00更新</div></div></span></span></th>
@@ -189,7 +228,8 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">Frontier Airlines (F9)</a></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td>8,567</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">94.1%</span></td>
                                 <td><span class="rate-value success">6.2%</span></td>
                                 <td><span class="rate-value success">91.8%</span></td>
@@ -197,8 +237,9 @@
                             </tr>
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                                <td><a href="airline-detail-not-activated-zh.html">Azul Airlines (AD)</a><span class="not-activated">未开通</span></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td><a href="airline-detail-zh.html">Azul Airlines (AD)</a><span class="offline-badge" data-tooltip="该航司暂未对您的搜索开放">离线</span></td>
+                                <td>6,920</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">93.5%</span></td>
                                 <td><span class="rate-value success">5.4%</span></td>
                                 <td><span class="rate-value success">90.2%</span></td>
@@ -206,8 +247,9 @@
                             </tr>
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
-                                <td><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="not-activated">未开通</span></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td><a href="airline-detail-zh.html">Lion Airlines (JT)</a><span class="offline-badge" data-tooltip="该航司暂未对您的搜索开放">离线</span></td>
+                                <td>7,640</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">92.8%</span></td>
                                 <td><span class="rate-value success">7.1%</span></td>
                                 <td><span class="rate-value success">89.5%</span></td>
@@ -216,7 +258,8 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">Scoot (TR)</a></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td>5,480</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value success">91.2%</span></td>
                                 <td><span class="rate-value warning">8.5%</span></td>
                                 <td><span class="rate-value success">88.7%</span></td>
@@ -225,7 +268,8 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">easyJet (U2)</a></td>
-                                <td><span class="status-badge online">在线</span></td>
+                                <td>4,870</td>
+                                <td><span class="status-badge online">活跃</span></td>
                                 <td><span class="rate-value warning">85.2%</span></td>
                                 <td><span class="rate-value warning">12.8%</span></td>
                                 <td><span class="rate-value warning">83.6%</span></td>
@@ -234,6 +278,7 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">Wizz Air (W6)</a></td>
+                                <td>3,210</td>
                                 <td><span class="status-badge balance">余额不足</span></td>
                                 <td><span class="rate-value warning">82.1%</span></td>
                                 <td><span class="rate-value error">15.2%</span></td>
@@ -243,6 +288,7 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">Ryanair (FR)</a></td>
+                                <td>4,120</td>
                                 <td><span class="status-badge balance">余额不足</span></td>
                                 <td><span class="rate-value warning">84.6%</span></td>
                                 <td><span class="rate-value warning">13.8%</span></td>
@@ -252,6 +298,7 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">Vueling (VY)</a></td>
+                                <td>2,150</td>
                                 <td><span class="status-badge maintenance">维护中</span></td>
                                 <td><span class="rate-value error">72.3%</span></td>
                                 <td><span class="rate-value error">18.5%</span></td>
@@ -261,6 +308,7 @@
                             <tr>
                                 <td><button class="star-btn" onclick="toggleStar(this)">☆</button></td>
                                 <td><a href="airline-detail-zh.html">Pegasus (PC)</a></td>
+                                <td>1,890</td>
                                 <td><span class="status-badge maintenance">维护中</span></td>
                                 <td><span class="rate-value error">78.5%</span></td>
                                 <td><span class="rate-value error">16.2%</span></td>
@@ -314,6 +362,32 @@
                 });
             });
         });
+        // Fix Item 9: Pagination items-per-page
+        (function() {
+            const perPageSelect = document.querySelector('.pagination-info select');
+            if (!perPageSelect) return;
+            perPageSelect.addEventListener('change', function() {
+                const perPage = parseInt(this.value);
+                const allRows = Array.from(document.querySelectorAll('.table-container .data-table tbody tr'));
+                allRows.forEach((row, idx) => {
+                    row.style.display = idx < perPage ? '' : 'none';
+                });
+                const total = allRows.length;
+                document.querySelector('.pagination-info').childNodes[0].textContent = `共 ${total} 家航司，每页 `;
+            });
+        })();
+        // Default sort by booking volume (Item 6)
+        (function() {
+            const tbody = document.querySelector('.table-container .data-table tbody');
+            if (!tbody) return;
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const aVal = parseInt((a.cells[2].textContent || '0').replace(/,/g, '')) || 0;
+                const bVal = parseInt((b.cells[2].textContent || '0').replace(/,/g, '')) || 0;
+                return bVal - aVal;
+            });
+            rows.forEach(r => tbody.appendChild(r));
+        })();
     </script>
 </body>
 </html>
